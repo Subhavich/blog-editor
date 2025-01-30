@@ -25,7 +25,7 @@ function App() {
 
   return (
     <>
-      <header className="w-full h-24 bg-rose-200 mb-4"></header>
+      <header className="bg-neutral-950 w-full h-24 mb-4"></header>
       <main className="max-w-screen-sm mx-auto  flex flex-col gap-y-4 mb-4 ">
         <p className="text-4xl">Editor</p>
 
@@ -81,6 +81,7 @@ function App() {
           onChange={(e) => setParagraph(e.target.value)}
         />
       </main>
+      <hr className="mb-4" />
       <section className="flex flex-col gap-y-4 max-w-screen-sm mx-auto">
         <p className="text-4xl">Result</p>
         <Blog header={header} paragraph={paragraph} imageUrl={heroImage} />

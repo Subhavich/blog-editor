@@ -1,5 +1,5 @@
 const Blog = ({ header, paragraph, imageUrl }) => (
-  <section className="flex flex-col items-center justify-center gap-12 bg-neutral-950 px-4 py-24 md:flex-row rounded-xl">
+  <section className="flex flex-col items-center justify-center gap-12 bg-neutral-950 px-16 py-16 md:flex-row rounded-xl">
     <div className="max-w-lg text-center md:text-start">
       <h2 className="mb-3 text-4xl text-white">{header}</h2>
       <p className="mb-6 text-sm leading-relaxed text-neutral-400">
@@ -12,10 +12,9 @@ const Blog = ({ header, paragraph, imageUrl }) => (
         See More
       </a>
     </div>
-    <div
-      className="relative z-0 h-44 w-60 shrink-0 rounded-xl border border-neutral-700 bg-neutral-800"
-      style={{ backgroundImage: `url(${imageUrl})` }}
-    ></div>
+    <div className=" relative z-0 overflow-hidden shrink-0 rounded-xl border border-neutral-700 bg-neutral-800">
+      <img src={imageUrl} className=" max-w-96 max-h-52 object-scale-down" />
+    </div>
   </section>
 );
 
