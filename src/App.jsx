@@ -15,8 +15,29 @@ function reducer(state, action) {
       );
 
     case "REORDER_EDITOR":
-      // Placeholder for future reordering logic
-      return state;
+      const targetInd = action.index;
+      const finalInd = action.index + action.increment;
+      const canSwitch = finalInd >= 0 && finalInd < state.length;
+      if (!canSwitch) {
+        return state;
+      }
+      const targetValue = {
+        ...state[targetInd],
+        config: { ...state[targetInd].config },
+      };
+      const finalValue = {
+        ...state[finalInd],
+        config: { ...state[finalInd].config },
+      };
+      return state.map((editor, index) => {
+        if (index === targetInd) {
+          return finalValue;
+        }
+        if (index === finalInd) {
+          return targetValue;
+        }
+        return { ...editor, config: { ...editor.config } };
+      });
 
     default:
       return state;
@@ -32,6 +53,7 @@ function App() {
     const newEditor = {
       type: selectedOption.getAttribute("data-type"),
       load: JSON.parse(selectedOption.getAttribute("data-load")),
+      config: { align: "left", bg: "white" },
     };
 
     dispatch({ type: "ADD_EDITOR", payload: newEditor });
@@ -44,6 +66,17 @@ function App() {
   return (
     <>
       <p className="text-center block py-12">EDITORs</p>
+      <button
+        onClick={() =>
+          dispatch({
+            type: "REORDER_EDITOR",
+            index: 1,
+            increment: -1,
+          })
+        }
+      >
+        WHAAT
+      </button>
       <main className="mx-auto max-w-screen-sm mb-4">
         <div className="space-y-4">
           {editors.map((editor, index) => (
@@ -87,8 +120,36 @@ export default App;
 // Component that renders dynamic input fields based on load keys
 function EditorForm({ index, type, load, dispatch }) {
   return (
-    <div className="p-4 border rounded shadow-sm">
-      <p className="text-lg font-bold mb-2">{type.toUpperCase()}</p>
+    <div className="p-2 border rounded shadow-sm">
+      <div className="flex start space-x-4 items-center">
+        <p className="text-lg font-bold">{type.toUpperCase()}</p>
+        <div className="flex space-x-2">
+          <span
+            className="cursor-pointer text-lg font-bold"
+            onClick={() =>
+              dispatch({
+                type: "REORDER_EDITOR",
+                index,
+                increment: -1,
+              })
+            }
+          >
+            {"<"}
+          </span>
+          <span
+            className="cursor-pointer text-lg font-bold"
+            onClick={() =>
+              dispatch({
+                type: "REORDER_EDITOR",
+                index,
+                increment: 1,
+              })
+            }
+          >
+            {">"}
+          </span>
+        </div>
+      </div>
       {Object.keys(load).map((key) => (
         <DynamicInput
           key={key}
@@ -102,6 +163,7 @@ function EditorForm({ index, type, load, dispatch }) {
   );
 }
 
+function GeneralSelectors({ option, dispatch }) {}
 // Renders appropriate input based on the key and updates the state on change
 function DynamicInput({ index, label, value, dispatch }) {
   const handleChange = (e) => {
