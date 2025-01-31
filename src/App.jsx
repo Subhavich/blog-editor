@@ -65,20 +65,10 @@ function App() {
 
   return (
     <>
-      <p className="text-center block py-12">EDITORs</p>
-      <button
-        onClick={() =>
-          dispatch({
-            type: "REORDER_EDITOR",
-            index: 1,
-            increment: -1,
-          })
-        }
-      >
-        WHAAT
-      </button>
+      <p className="text-center block py-2">EDITORs</p>
+
       <main className="mx-auto max-w-screen-sm mb-4">
-        <div className="space-y-4">
+        <div className="space-y-4 mb-4">
           {editors.map((editor, index) => (
             <EditorForm
               key={index}
