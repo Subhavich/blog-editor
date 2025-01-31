@@ -1,4 +1,4 @@
-const Blog = ({ header, paragraph, imageUrl }) => (
+const Combo1 = ({ header, paragraph, imageUrl }) => (
   <section className="flex flex-col items-center justify-center gap-12 bg-neutral-950 px-16 py-16 md:flex-row rounded-xl">
     <div className="max-w-lg text-center md:text-start">
       <h2 className="mb-3 text-4xl text-white">{header}</h2>
@@ -18,4 +18,4 @@ const Blog = ({ header, paragraph, imageUrl }) => (
   </section>
 );
 
-export default Blog;
+export default Combo1;

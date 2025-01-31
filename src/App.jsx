@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import Blog from "./BlogText1";
+import Blog from "./components/Combo1";
+import Bar from "./components/common/Bar";
+import Combo1Editor from "./components/editors/Combo1-editor";
 function App() {
-  const [mode, setMode] = useState(0);
-  const [choice, setChoice] = useState(0);
+  const [componentList, setComponentList] = useState([]);
   //Component State
   const [heroImage, setHeroImage] = useState(null);
   const [paragraph, setParagraph] = useState("");
@@ -25,8 +26,9 @@ function App() {
 
   return (
     <>
-      <header className="bg-neutral-950 w-full h-24 mb-4"></header>
-      <main className="max-w-screen-sm mx-auto  flex flex-col gap-y-4 mb-4 ">
+      <Bar />
+      {/* <Combo1Editor /> */}
+      <main className="max-w-screen-sm mx-auto flex flex-col gap-y-4 mb-4 ">
         <p className="text-4xl">Editor</p>
 
         <label className="text-xl">Header Image</label>
