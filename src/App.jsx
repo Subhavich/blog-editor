@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useReducer, useRef, useEffect } from "react";
+import options from "./Data";
 
 const mockBlog = [
   { type: "header", load: { text: "Damon" } },
@@ -6,17 +7,40 @@ const mockBlog = [
   { type: "header", load: { text: "Damon" } },
 ];
 
+// Reducer function to manage the editors state
+function reducer(state, action) {
+  switch (action.type) {
+    case "ADD_EDITOR":
+      return [...state, action.payload];
+
+    case "UPDATE_EDITOR":
+      return state.map((editor, index) =>
+        index === action.index
+          ? { ...editor, load: { ...editor.load, [action.key]: action.value } }
+          : editor
+      );
+
+    case "REORDER_EDITOR":
+      // Placeholder for future reordering logic
+      return state;
+
+    default:
+      return state;
+  }
+}
+
 function App() {
-  const [editors, setEditors] = useState([]);
+  const [editors, dispatch] = useReducer(reducer, []);
   const selectRef = useRef();
-  const handleAddEditor = (e) => {
+
+  const handleAddEditor = () => {
     const selectedOption = selectRef.current.selectedOptions[0];
-    const selectedValue = {
+    const newEditor = {
       type: selectedOption.getAttribute("data-type"),
       load: JSON.parse(selectedOption.getAttribute("data-load")),
     };
 
-    setEditors((pvEditors) => [...pvEditors, selectedValue]);
+    dispatch({ type: "ADD_EDITOR", payload: newEditor });
   };
 
   useEffect(() => {
@@ -27,21 +51,29 @@ function App() {
     <>
       <p className="text-center block py-12">EDITORs</p>
       <main className="mx-auto max-w-screen-sm mb-4">
-        <div className="flex space-x-2">
-          {editors.map((editor) => getEdit(editor.type))}
+        <div className="space-y-4">
+          {editors.map((editor, index) => (
+            <EditorForm
+              key={index}
+              index={index}
+              type={editor.type}
+              load={editor.load}
+              dispatch={dispatch}
+            />
+          ))}
         </div>
         <div className="flex space-x-2">
           <select ref={selectRef} className="border p-2">
-            <option
-              data-type="combo"
-              data-load='{"text":"","head":""}'
-              value="combo"
-            >
-              combo
-            </option>
-            <option data-load='{"text":""}' data-type="header" value="header">
-              header
-            </option>
+            {options.map((opt) => (
+              <option
+                key={opt.type}
+                data-type={opt.type}
+                data-load={JSON.stringify(opt.load)}
+                value={opt.type}
+              >
+                {opt.label}
+              </option>
+            ))}
           </select>
           <button
             onClick={handleAddEditor}
@@ -58,6 +90,58 @@ function App() {
 
 export default App;
 
+// Component that renders dynamic input fields based on load keys
+function EditorForm({ index, type, load, dispatch }) {
+  return (
+    <div className="p-4 border rounded shadow-sm">
+      <p className="text-lg font-bold mb-2">{type.toUpperCase()}</p>
+      {Object.keys(load).map((key) => (
+        <DynamicInput
+          key={key}
+          index={index}
+          label={key}
+          value={load[key]}
+          dispatch={dispatch}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Renders appropriate input based on the key and updates the state on change
+function DynamicInput({ index, label, value, dispatch }) {
+  const handleChange = (e) => {
+    dispatch({
+      type: "UPDATE_EDITOR",
+      index,
+      key: label,
+      value: e.target.value,
+    });
+  };
+
+  return (
+    <div className="mb-2">
+      <label className="block font-semibold">{label}:</label>
+      {label === "text" ? (
+        <textarea
+          value={value}
+          onChange={handleChange}
+          className="border p-2 w-full resize-none"
+        />
+      ) : label === "head" ? (
+        <input
+          type="text"
+          value={value}
+          onChange={handleChange}
+          className="border p-2 w-full"
+        />
+      ) : label === "img" ? (
+        <input type="file" className="border p-2 w-full" />
+      ) : null}
+    </div>
+  );
+}
+
 function Header({ load }) {
   const { text } = load;
   return (
@@ -68,28 +152,14 @@ function Header({ load }) {
 function Combo({ load }) {
   const { head, text } = load;
   return (
-    <>
-      <div className="p-4 bg-yellow-400/50">
-        <p className="text-2xl">{head}</p>
-        <p>{text}</p>
-      </div>
-    </>
+    <div className="p-4 bg-yellow-400/50">
+      <p className="text-2xl">{head}</p>
+      <p>{text}</p>
+    </div>
   );
 }
 
-function ComboEditor({}) {
-  return <p>Nile</p>;
-}
-
-function HeaderEditor({}) {
-  return (
-    <>
-      <p>Fun</p>
-    </>
-  );
-}
-
-function getEle(type, load) {
+function renderEle(type, load) {
   switch (type) {
     case "header":
       return <Header load={load} />;
@@ -99,17 +169,7 @@ function getEle(type, load) {
       return null;
   }
 }
-function getEdit(type, load) {
-  switch (type) {
-    case "header":
-      return <HeaderEditor />;
-    case "combo":
-      return <ComboEditor />;
-    default:
-      return null;
-  }
-}
 
 function Result() {
-  return <>{mockBlog.map((ele) => getEle(ele.type, ele.load))}</>;
+  return <>{mockBlog.map((ele, index) => renderEle(ele.type, ele.load))}</>;
 }
