@@ -1,95 +1,115 @@
 import { useState, useEffect, useRef } from "react";
-import Blog from "./components/Combo1";
-import Bar from "./components/common/Bar";
-import Combo1Editor from "./components/editors/Combo1-editor";
-function App() {
-  const [componentList, setComponentList] = useState([]);
-  //Component State
-  const [heroImage, setHeroImage] = useState(null);
-  const [paragraph, setParagraph] = useState("");
-  const [header, setHeader] = useState("");
 
-  const pickerRef = useRef();
+const mockBlog = [
+  { type: "header", load: { text: "Damon" } },
+  { type: "combo", load: { text: "Stauskas", head: "Nick" } },
+  { type: "header", load: { text: "Damon" } },
+];
+
+function App() {
+  const [editors, setEditors] = useState([]);
+  const selectRef = useRef();
+  const handleAddEditor = (e) => {
+    const selectedOption = selectRef.current.selectedOptions[0];
+    const selectedValue = {
+      type: selectedOption.getAttribute("data-type"),
+      load: JSON.parse(selectedOption.getAttribute("data-load")),
+    };
+
+    setEditors((pvEditors) => [...pvEditors, selectedValue]);
+  };
 
   useEffect(() => {
-    return () => {
-      if (heroImage) URL.revokeObjectURL(heroImage);
-    };
-  }, [heroImage]);
-
-  const pickedHandler = (e) => {
-    if (e.target.files && e.target.files.length !== 0) {
-      const objectUrl = URL.createObjectURL(e.target.files[0]);
-      setHeroImage(objectUrl);
-    }
-  };
+    console.log(editors);
+  }, [editors]);
 
   return (
     <>
-      <Bar />
-      {/* <Combo1Editor /> */}
-      <main className="max-w-screen-sm mx-auto flex flex-col gap-y-4 mb-4 ">
-        <p className="text-4xl">Editor</p>
-
-        <label className="text-xl">Header Image</label>
-        <input
-          ref={pickerRef}
-          onChange={pickedHandler}
-          type="file"
-          className="border-zinc-400 border w-fit hidden"
-        />
-        {heroImage ? (
-          <>
-            <div
-              className=" relative size-24 overflow-hidden bg-cover bg-center rounded-lg"
-              style={{ backgroundImage: `url(${heroImage})` }}
+      <p className="text-center block py-12">EDITORs</p>
+      <main className="mx-auto max-w-screen-sm mb-4">
+        <div className="flex space-x-2">
+          {editors.map((editor) => getEdit(editor.type))}
+        </div>
+        <div className="flex space-x-2">
+          <select ref={selectRef} className="border p-2">
+            <option
+              data-type="combo"
+              data-load='{"text":"","head":""}'
+              value="combo"
             >
-              <div className=" size-24 backdrop-brightness-50 z-10 inset absolute"></div>
-              <p
-                onClick={() => pickerRef.current.click()}
-                className="cursor-pointer hover:scale-125 transition-all size-24 z-24 flex items-center justify-center text-white absolute text-4xl"
-              >
-                +
-              </p>
-            </div>
-          </>
-        ) : (
-          <div
-            onClick={() => pickerRef.current.click()}
-            className=" cursor-pointer border-3 rounded-lg transition-all size-24 z-24 flex items-center justify-center text-4xl"
+              combo
+            </option>
+            <option data-load='{"text":""}' data-type="header" value="header">
+              header
+            </option>
+          </select>
+          <button
+            onClick={handleAddEditor}
+            className="border px-2 hover:bg-green-200 transition-all"
           >
-            +
-          </div>
-        )}
-        <label htmlFor="header" className="text-xl">
-          Section Header
-        </label>
-        <input
-          value={header}
-          name="header"
-          id="header"
-          className="border border-zinc-400 rounded"
-          onChange={(e) => setHeader(e.target.value)}
-        />
-        <label htmlFor="paragraph" className="text-xl">
-          Section text
-        </label>
-        <textarea
-          value={paragraph}
-          rows="4"
-          name="paragraph"
-          id="paragraph"
-          className="border border-zinc-400 rounded"
-          onChange={(e) => setParagraph(e.target.value)}
-        />
+            Add Element
+          </button>
+        </div>
       </main>
-      <hr className="mb-4" />
-      <section className="flex flex-col gap-y-4 max-w-screen-sm mx-auto">
-        <p className="text-4xl">Result</p>
-        <Blog header={header} paragraph={paragraph} imageUrl={heroImage} />
-      </section>
+      <Result />
     </>
   );
 }
 
 export default App;
+
+function Header({ load }) {
+  const { text } = load;
+  return (
+    <p className="text-white text-2xl font-bold bg-neutral-950 p-4">{text}</p>
+  );
+}
+
+function Combo({ load }) {
+  const { head, text } = load;
+  return (
+    <>
+      <div className="p-4 bg-yellow-400/50">
+        <p className="text-2xl">{head}</p>
+        <p>{text}</p>
+      </div>
+    </>
+  );
+}
+
+function ComboEditor({}) {
+  return <p>Nile</p>;
+}
+
+function HeaderEditor({}) {
+  return (
+    <>
+      <p>Fun</p>
+    </>
+  );
+}
+
+function getEle(type, load) {
+  switch (type) {
+    case "header":
+      return <Header load={load} />;
+    case "combo":
+      return <Combo load={load} />;
+    default:
+      return null;
+  }
+}
+function getEdit(type, load) {
+  switch (type) {
+    case "header":
+      return <HeaderEditor />;
+    case "combo":
+      return <ComboEditor />;
+    default:
+      return null;
+  }
+}
+
+function Result() {
+  return <>{mockBlog.map((ele) => getEle(ele.type, ele.load))}</>;
+}
