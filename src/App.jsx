@@ -113,6 +113,15 @@ function DynamicInput({ index, label, value, dispatch }) {
     });
   };
 
+  const handleChangeImg = (e) => {
+    dispatch({
+      type: "UPDATE_EDITOR",
+      index,
+      key: label,
+      value: e.target.files ? URL.createObjectURL(e.target.files[0]) : "",
+    });
+  };
+
   return (
     <div className="mb-2">
       <label className="block font-semibold">{label}:</label>
@@ -130,7 +139,11 @@ function DynamicInput({ index, label, value, dispatch }) {
           className="border p-2 w-full"
         />
       ) : label === "img" ? (
-        <input type="file" className="border p-2 w-full" />
+        <input
+          onChange={handleChangeImg}
+          type="file"
+          className="border p-2 w-full"
+        />
       ) : null}
     </div>
   );
@@ -153,12 +166,24 @@ function Combo({ load }) {
   );
 }
 
+function ImageCaption({ load }) {
+  const { img, text } = load;
+  return (
+    <div>
+      <img className=" max-w-2xs" src={img} />
+      <p className="text-zinc-400 italic">{text}</p>
+    </div>
+  );
+}
+
 function renderEle(type, load) {
   switch (type) {
     case "header":
       return <Header load={load} />;
     case "combo":
       return <Combo load={load} />;
+    case "imageCaption":
+      return <ImageCaption load={load} />;
     default:
       return null;
   }

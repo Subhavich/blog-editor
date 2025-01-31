@@ -2,13 +2,18 @@
 const options = [
   {
     type: "combo",
-    load: { text: "", head: "" },
-    label: "combo",
+    load: { head: "", text: "" },
+    label: "Combo",
   },
   {
     type: "header",
     load: { text: "" },
-    label: "header",
+    label: "Header",
+  },
+  {
+    type: "imageCaption",
+    load: { img: "", text: "" },
+    label: "Image with Caption",
   },
 ];
 
