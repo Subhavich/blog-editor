@@ -1,12 +1,6 @@
 import { useReducer, useRef, useEffect } from "react";
 import options from "./Data";
 
-const mockBlog = [
-  { type: "header", load: { text: "Damon" } },
-  { type: "combo", load: { text: "Stauskas", head: "Nick" } },
-  { type: "header", load: { text: "Damon" } },
-];
-
 // Reducer function to manage the editors state
 function reducer(state, action) {
   switch (action.type) {
@@ -83,7 +77,7 @@ function App() {
           </button>
         </div>
       </main>
-      <Result />
+      <Result editors={editors} />
     </>
   );
 }
@@ -170,6 +164,18 @@ function renderEle(type, load) {
   }
 }
 
-function Result() {
-  return <>{mockBlog.map((ele, index) => renderEle(ele.type, ele.load))}</>;
+// Updated Result component to use editors state instead of mockBlog
+function Result({ editors }) {
+  return (
+    <div className="p-4 border-t mt-8">
+      <h2 className="text-xl font-bold mb-4">Rendered Elements:</h2>
+      {editors.length > 0 ? (
+        editors.map((ele, index) => (
+          <div key={index}>{renderEle(ele.type, ele.load)}</div>
+        ))
+      ) : (
+        <p className="text-gray-500">No elements added yet.</p>
+      )}
+    </div>
+  );
 }
