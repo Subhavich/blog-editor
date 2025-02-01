@@ -1,6 +1,6 @@
 import { useReducer, useRef, useEffect } from "react";
-import { options, alignmentOptions, bgOptions } from "./Data";
-import renderEle from "./components/blocks/BlockOutlet";
+import { alignmentOptions, bgOptions } from "./Data";
+import renderEle, { options } from "./components/blocks/BlockOutlet";
 // Reducer function to manage the editors state
 function reducer(state, action) {
   switch (action.type) {
@@ -69,6 +69,7 @@ function App() {
     dispatch({ type: "ADD_EDITOR", payload: newEditor });
   };
 
+  //TEST
   useEffect(() => {
     console.log(editors);
   }, [editors]);
