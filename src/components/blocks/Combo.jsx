@@ -8,14 +8,19 @@ function Combo({ load, config }) {
         backgroundColor: bg,
         display: "flex",
         flexDirection: "column",
+
         alignItems:
           align === "center" ? "center" : align === "left" ? "start" : "end",
         color: bg === "black" ? "white" : "black",
       }}
       className="p-4 "
     >
-      <p className="text-2xl text-center">{head}</p>
-      <p className="text-base text-center">{text}</p>
+      <p style={{ textAlign: align }} className="text-2xl text-center">
+        {head}
+      </p>
+      <p style={{ textAlign: align }} className="text-base text-center">
+        {text}
+      </p>
     </div>
   );
 }
