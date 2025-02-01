@@ -1,5 +1,5 @@
 import { useReducer, useRef, useEffect } from "react";
-import options from "./Data";
+import { options, alignmentOptions, bgOptions } from "./Data";
 import renderEle from "./components/blocks/BlockOutlet";
 // Reducer function to manage the editors state
 function reducer(state, action) {
@@ -10,7 +10,17 @@ function reducer(state, action) {
     case "UPDATE_EDITOR":
       return state.map((editor, index) =>
         index === action.index
-          ? { ...editor, load: { ...editor.load, [action.key]: action.value } }
+          ? {
+              ...editor,
+              load:
+                action.key === "config"
+                  ? editor.load // Prevent modifying `load` when updating `config`
+                  : { ...editor.load, [action.key]: action.value },
+              config:
+                action.key === "config"
+                  ? { ...editor.config, ...action.value } // Properly update `config`
+                  : editor.config,
+            }
           : editor
       );
 
@@ -110,6 +120,15 @@ export default App;
 
 // Component that renders dynamic input fields based on load keys
 function EditorForm({ index, type, load, dispatch }) {
+  const handleConfigChange = (e, arg) => {
+    dispatch({
+      type: "UPDATE_EDITOR",
+      index,
+      key: "config",
+      value: { ...load.config, [arg]: e.target.value },
+    });
+  };
+
   return (
     <div className="p-2 border rounded shadow-sm">
       <div className="flex start space-x-4 items-center">
@@ -140,6 +159,22 @@ function EditorForm({ index, type, load, dispatch }) {
             {">"}
           </span>
         </div>
+      </div>
+      <div>
+        <select onChange={(e) => handleConfigChange(e, "align")}>
+          {alignmentOptions.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <select onChange={(e) => handleConfigChange(e, "bg")}>
+          {bgOptions.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
       </div>
       {Object.keys(load).map((key) => (
         <DynamicInput

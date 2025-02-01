@@ -3,7 +3,11 @@ function Heading({ load, config }) {
   const { align, bg } = config;
   return (
     <p
-      style={{ backgroundColor: bg }}
+      style={{
+        backgroundColor: bg,
+        textAlign: align,
+        color: bg === "black" ? "white" : "black",
+      }}
       className="text-white text-2xl font-bold p-4"
     >
       {text}
