@@ -1,7 +1,13 @@
 function Heading({ load, config }) {
   const { text } = load;
+  const { align, bg } = config;
   return (
-    <p className="text-white text-2xl font-bold bg-neutral-950 p-4">{text}</p>
+    <p
+      style={{ backgroundColor: bg }}
+      className="text-white text-2xl font-bold p-4"
+    >
+      {text}
+    </p>
   );
 }
 
