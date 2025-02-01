@@ -157,7 +157,7 @@ function App() {
           isSidebarOpen ? "ml-84" : "ml-12"
         } p-4`}
       >
-        <div className="w-full mx-auto flex space-x-8 ">
+        <div className="justify-center mx-auto flex space-x-8 ">
           {screenOptions.map((opt) => (
             <button
               key={opt.label}
