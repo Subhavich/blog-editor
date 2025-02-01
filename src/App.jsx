@@ -8,25 +8,29 @@ function reducer(state, action) {
   switch (action.type) {
     case "ADD_EDITOR":
       return [...state, action.payload];
-
     case "UPDATE_EDITOR":
-      return state.map((editor, index) =>
-        index === action.index
-          ? {
-              ...editor,
-              load:
-                action.key === "config"
-                  ? { ...editor.load }
-                  : { ...editor.load, [action.key]: action.value },
-              config:
-                action.key === "config"
-                  ? { ...editor.config, ...action.value }
-                  : { ...editor.config },
-              expanded:
-                action.key === "expanded" ? action.value : editor.expanded, // ✅ Always update expanded separately
-            }
-          : editor
-      );
+      return state.map((editor, index) => {
+        if (index !== action.index) return editor;
+
+        let updatedEditor = { ...editor };
+
+        switch (action.key) {
+          case "expanded":
+            updatedEditor.expanded = action.value;
+            break;
+
+          case "config":
+            updatedEditor.config = { ...editor.config, ...action.value };
+            break;
+
+          default: // Handles all other updates (load updates)
+            updatedEditor.load = { ...editor.load, [action.key]: action.value };
+            break;
+        }
+
+        return updatedEditor; // ✅ Return the updated object
+      });
+
     case "REORDER_EDITOR":
       const targetInd = action.index;
       const finalInd = action.index + action.increment;
