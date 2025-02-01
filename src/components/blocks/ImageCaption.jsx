@@ -1,8 +1,6 @@
 function ImageCaption({ load, config }) {
   const { img, text } = load;
   const { align, bg, width } = config;
-
-  console.log("wdith is", width);
   return (
     <div
       className="p-4"
@@ -16,7 +14,7 @@ function ImageCaption({ load, config }) {
       }}
     >
       <img
-        className=" "
+        className=""
         src={img}
         style={{
           width: width ? (isNaN(width) ? width : `${width}px`) : "auto",

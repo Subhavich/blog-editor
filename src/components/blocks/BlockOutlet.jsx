@@ -6,7 +6,6 @@ import Spacer from "./Spacer";
 import List from "./List";
 
 function renderEle(type, load, config) {
-  console.log(type, load);
   switch (type) {
     case "heading":
       return <Heading load={load} config={config} />;
@@ -28,19 +27,21 @@ function renderEle(type, load, config) {
 export const options = [
   {
     type: "heading",
-    load: { text: "add heading here" },
+    load: { text: "Batman, Turkey" },
     label: "Heading",
   },
   {
     type: "paragraph",
-    load: { text: "add long text here" },
+    load: {
+      text: "Batman is connected by highways and railway with the nearby cities of Diyarbakır and Kurtalan and with the capital Ankara. The distance (using highways) to Istanbul is 1,465 km (910 mi), to Ankara 1,012 km (629 mi), and to İzmir 1,520 km (944 mi)",
+    },
     label: "Paragraph",
   },
   {
     type: "imageCaption",
     load: {
-      img: "https://media.cntraveler.com/photos/53d9d56c6dec627b149da069/master/pass/malabadi-bridge-batman-turkey.jpg",
-      text: "Batman, Turkey",
+      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Tigris_2015.jpg/1920px-Tigris_2015.jpg",
+      text: "The Tigris river in Batman Province.",
     },
     label: "Image with Caption",
   },
@@ -51,12 +52,21 @@ export const options = [
   },
   {
     type: "combo",
-    load: { head: "add heading here", text: "add long text here" },
+    load: {
+      head: "Early history",
+      text: "The Batman Province contains the strategic Tigris River with fertile lands by its sides, as well as rocky hills with numerous caves providing a natural shelter. As a result, it was inhabited from prehistoric times, likely from the Neolithic (Paleolithic)[contradictory] period, according to archeological evidence.",
+    },
     label: "Combo",
   },
   {
     type: "list",
-    load: { head: "", array: [] },
+    load: {
+      head: "Climate",
+      array: [
+        "Highest recorded temperature:48.8 °C (119.8 °F) on 10 July 1962",
+        "Lowest recorded temperature:−24.0 °C (−11.2 °F) on 1 January 2007",
+      ],
+    },
     label: "List",
   },
 ];

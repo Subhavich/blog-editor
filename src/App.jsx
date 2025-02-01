@@ -75,7 +75,7 @@ function App() {
     const newEditor = {
       type: selectedOption.getAttribute("data-type"),
       load: JSON.parse(selectedOption.getAttribute("data-load")),
-      config: { align: "left", bg: "white", width: 123 },
+      config: { align: "left", bg: "white", width: 480 },
       expanded: true,
     };
 
