@@ -1,6 +1,8 @@
 function ImageCaption({ load, config }) {
   const { img, text } = load;
-  const { align, bg } = config;
+  const { align, bg, width } = config;
+
+  console.log("wdith is", width);
   return (
     <div
       className="p-4"
@@ -13,7 +15,16 @@ function ImageCaption({ load, config }) {
         color: bg === "black" ? "white" : "black",
       }}
     >
-      <img className=" max-w-2xs" src={img} />
+      <img
+        className=" "
+        src={img}
+        style={{
+          width: width ? (isNaN(width) ? width : `${width}px`) : "auto",
+          height: "auto",
+          objectFit: "cover", // ✅ Ensures image scales up
+          imageRendering: "auto", // ✅ Allows upscaling while compromising quality
+        }}
+      />
       <p className="text-zinc-400 italic">{text}</p>
     </div>
   );

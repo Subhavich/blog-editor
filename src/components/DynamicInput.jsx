@@ -75,6 +75,7 @@ const HeadInput = ({ value, onChange }) => {
 const ImageInput = ({ value, index, label, dispatch }) => {
   const [preview, setPreview] = useState(value || null);
   const imageRef = useRef();
+  const scaleRef = useRef();
 
   const handleChangeImg = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -89,8 +90,25 @@ const ImageInput = ({ value, index, label, dispatch }) => {
     }
   };
 
+  const handleWidthChange = (e) => {
+    dispatch({
+      type: "UPDATE_EDITOR",
+      index,
+      key: "config",
+      value: { width: scaleRef.current.value },
+    });
+  };
+
   return (
     <>
+      <input
+        onChange={handleWidthChange}
+        type="range"
+        min={150}
+        max={750}
+        step={10}
+        ref={scaleRef}
+      />
       <input
         type="file"
         ref={imageRef}
