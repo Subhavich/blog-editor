@@ -76,6 +76,7 @@ function App() {
               type={editor.type}
               load={editor.load}
               dispatch={dispatch}
+              config={editor.config}
             />
           ))}
         </div>
@@ -201,24 +202,26 @@ function DynamicInput({ index, label, value, dispatch }) {
   );
 }
 
-function Header({ load }) {
+function Header({ load, config }) {
   const { text } = load;
   return (
     <p className="text-white text-2xl font-bold bg-neutral-950 p-4">{text}</p>
   );
 }
 
-function Combo({ load }) {
+function Combo({ load, config }) {
   const { head, text } = load;
+  const { align, bg } = config;
+
   return (
-    <div className="p-4 bg-yellow-400/50">
-      <p className="text-2xl">{head}</p>
-      <p>{text}</p>
+    <div style={{ backgroundColor: bg }} className="p-4">
+      <p className="text-2xl text-center">{head}</p>
+      <p className="text-base text-center">{text}</p>
     </div>
   );
 }
 
-function ImageCaption({ load }) {
+function ImageCaption({ load, config }) {
   const { img, text } = load;
   return (
     <div>
@@ -228,14 +231,14 @@ function ImageCaption({ load }) {
   );
 }
 
-function renderEle(type, load) {
+function renderEle(type, load, config) {
   switch (type) {
     case "header":
-      return <Header load={load} />;
+      return <Header load={load} config={config} />;
     case "combo":
-      return <Combo load={load} />;
+      return <Combo load={load} config={config} />;
     case "imageCaption":
-      return <ImageCaption load={load} />;
+      return <ImageCaption load={load} config={config} />;
     default:
       return null;
   }
@@ -248,7 +251,7 @@ function Result({ editors }) {
       <h2 className="text-xl font-bold mb-4">Rendered Elements:</h2>
       {editors.length > 0 ? (
         editors.map((ele, index) => (
-          <div key={index}>{renderEle(ele.type, ele.load)}</div>
+          <div key={index}>{renderEle(ele.type, ele.load, ele.config)}</div>
         ))
       ) : (
         <p className="text-gray-500">No elements added yet.</p>
