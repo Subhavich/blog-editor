@@ -1,7 +1,11 @@
 import { useReducer, useRef, useState, useEffect } from "react";
 import { alignmentOptions, bgOptions } from "./Data";
 import { options } from "./components/blocks/BlockOutlet";
-import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import {
+  AiFillCaretDown,
+  AiFillCaretUp,
+  AiOutlineDelete,
+} from "react-icons/ai";
 import DynamicInput from "./components/DynamicInput";
 import Result from "./components/Results";
 // Reducer function to manage the editors state
@@ -23,6 +27,8 @@ function reducer(state, action) {
                 action.key === "config"
                   ? { ...editor.config, ...action.value } // Properly update `config`
                   : editor.config,
+              expanded:
+                action.key === "expanded" ? action.value : editor.expanded,
             }
           : editor
       );
@@ -52,6 +58,9 @@ function reducer(state, action) {
         return { ...editor, config: { ...editor.config } };
       });
 
+    case "DELETE_EDITOR":
+      return state.filter((_, index) => index !== action.index);
+
     default:
       return state;
   }
@@ -68,6 +77,7 @@ function App() {
       type: selectedOption.getAttribute("data-type"),
       load: JSON.parse(selectedOption.getAttribute("data-load")),
       config: { align: "left", bg: "white" },
+      expanded: true,
     };
 
     dispatch({ type: "ADD_EDITOR", payload: newEditor });
@@ -82,7 +92,6 @@ function App() {
     <div className="flex font-mono">
       {/* Sticky Sidebar */}
       <div
-        id="me"
         className={`bg-neutral-200   fixed  left-0 top-0 h-screen  shadow-lg  transition-all overflow-y-auto duration-300 ${
           isSidebarOpen ? "w-84" : "w-12"
         }`}
@@ -109,6 +118,7 @@ function App() {
                   load={editor.load}
                   dispatch={dispatch}
                   config={editor.config}
+                  expanded={editor.expanded}
                 />
               ))}
             </main>
@@ -131,7 +141,7 @@ function App() {
               </select>
               <button
                 onClick={handleAddEditor}
-                className="border px-2 hover:bg-green-200 transition-all text-black"
+                className="border px-2 cursor-pointer hover:bg-green-200 transition-all text-black"
               >
                 Add Element
               </button>
@@ -155,7 +165,8 @@ function App() {
 export default App;
 
 // Component that renders dynamic input fields based on load keys
-function EditorForm({ index, type, load, dispatch }) {
+function EditorForm({ index, type, load, dispatch, expanded }) {
+  console.log("expanded is ", expanded, !expanded);
   const handleConfigChange = (e, arg) => {
     dispatch({
       type: "UPDATE_EDITOR",
@@ -167,8 +178,34 @@ function EditorForm({ index, type, load, dispatch }) {
 
   return (
     <div className=" p-2 border rounded shadow-sm">
-      <div className="flex justify-between space-x-4 items-center">
-        <p className="text-lg   font-bold">{type.toUpperCase()}</p>
+      <div
+        className={` ${
+          expanded ? "mb-1" : ""
+        } flex justify-between space-x-4 items-center `}
+      >
+        <button
+          onClick={() => dispatch({ type: "DELETE_EDITOR", index })}
+          className="text-rose-800 transition-all"
+        >
+          <AiOutlineDelete size={24} />
+        </button>
+
+        {/* Expand/Collapse Title */}
+        <p
+          onClick={() =>
+            dispatch({
+              type: "UPDATE_EDITOR",
+              index,
+              key: "expanded",
+              value: !expanded,
+            })
+          }
+          className="cursor-pointer text-lg font-bold flex-1 text-center"
+        >
+          {type.toUpperCase()}
+        </p>
+
+        {/* up-down btn */}
         <div className="flex space-x-2">
           <span
             className="cursor-pointer text-lg font-bold"
@@ -196,37 +233,46 @@ function EditorForm({ index, type, load, dispatch }) {
           </span>
         </div>
       </div>
-      <div className="flex space-x-2">
-        <select
-          className="bg-white"
-          onChange={(e) => handleConfigChange(e, "align")}
-        >
-          {alignmentOptions.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-        <select
-          className="bg-white"
-          onChange={(e) => handleConfigChange(e, "bg")}
-        >
-          {bgOptions.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-      </div>
-      {Object.keys(load).map((key) => (
-        <DynamicInput
-          key={key}
-          index={index}
-          label={key}
-          value={load[key]}
-          dispatch={dispatch}
-        />
-      ))}
+      {expanded && (
+        <>
+          <hr className="mb-2" />
+          <div className="flex flex-col space-y-2">
+            <div className="flex space-x-2 mt-2">
+              <select
+                className="bg-white p-1"
+                onChange={(e) => handleConfigChange(e, "align")}
+              >
+                {alignmentOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+              <select
+                className="bg-white p-1"
+                onChange={(e) => handleConfigChange(e, "bg")}
+              >
+                {bgOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {Object.keys(load).map((key) =>
+              key !== "expanded" ? (
+                <DynamicInput
+                  key={key}
+                  index={index}
+                  label={key}
+                  value={load[key]}
+                  dispatch={dispatch}
+                />
+              ) : null
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

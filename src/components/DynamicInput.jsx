@@ -21,7 +21,6 @@ function DynamicInput({ index, label, value, dispatch }) {
     });
     setPreview(imageUrl);
   };
-
   return (
     <div className=" mb-2">
       <label className="block font-semibold">{label}:</label>
@@ -29,14 +28,14 @@ function DynamicInput({ index, label, value, dispatch }) {
         <textarea
           value={value}
           onChange={handleChange}
-          className="border p-2 w-full resize-none"
+          className="bg-white border p-2 w-full resize-none"
         />
       ) : label === "head" ? (
         <input
           type="text"
           value={value}
           onChange={handleChange}
-          className="border p-2 w-full"
+          className="bg-white border p-2 w-full"
         />
       ) : label === "img" ? (
         <>
