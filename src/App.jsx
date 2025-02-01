@@ -1,6 +1,6 @@
 import { useReducer, useRef, useEffect } from "react";
 import options from "./Data";
-
+import renderEle from "./components/blocks/BlockOutlet";
 // Reducer function to manage the editors state
 function reducer(state, action) {
   switch (action.type) {
@@ -154,7 +154,7 @@ function EditorForm({ index, type, load, dispatch }) {
   );
 }
 
-function GeneralSelectors({ option, dispatch }) {}
+function ConfigSelectors({ option, dispatch }) {}
 // Renders appropriate input based on the key and updates the state on change
 function DynamicInput({ index, label, value, dispatch }) {
   const handleChange = (e) => {
@@ -200,48 +200,6 @@ function DynamicInput({ index, label, value, dispatch }) {
       ) : null}
     </div>
   );
-}
-
-function Header({ load, config }) {
-  const { text } = load;
-  return (
-    <p className="text-white text-2xl font-bold bg-neutral-950 p-4">{text}</p>
-  );
-}
-
-function Combo({ load, config }) {
-  const { head, text } = load;
-  const { align, bg } = config;
-
-  return (
-    <div style={{ backgroundColor: bg }} className="p-4">
-      <p className="text-2xl text-center">{head}</p>
-      <p className="text-base text-center">{text}</p>
-    </div>
-  );
-}
-
-function ImageCaption({ load, config }) {
-  const { img, text } = load;
-  return (
-    <div>
-      <img className=" max-w-2xs" src={img} />
-      <p className="text-zinc-400 italic">{text}</p>
-    </div>
-  );
-}
-
-function renderEle(type, load, config) {
-  switch (type) {
-    case "header":
-      return <Header load={load} config={config} />;
-    case "combo":
-      return <Combo load={load} config={config} />;
-    case "imageCaption":
-      return <ImageCaption load={load} config={config} />;
-    default:
-      return null;
-  }
 }
 
 // Updated Result component to use editors state instead of mockBlog

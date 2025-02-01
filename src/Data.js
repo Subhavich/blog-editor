@@ -6,9 +6,9 @@ const options = [
     label: "Combo",
   },
   {
-    type: "header",
+    type: "heading",
     load: { text: "" },
-    label: "Header",
+    label: "Heading",
   },
   {
     type: "imageCaption",
