@@ -4,7 +4,7 @@ function List({ load, config }) {
   return (
     <>
       <div
-        className={`p-1 space-y-2 `}
+        className={`p-4 space-y-2`}
         style={{
           backgroundColor: bg,
           display: "flex",

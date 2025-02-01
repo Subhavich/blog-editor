@@ -40,10 +40,13 @@ function DynamicInput({ index, label, value, dispatch }) {
 
   return (
     <div className="mb-2">
-      <label className="block font-semibold">{label}:</label>
-
+      {!label === "placehold" && (
+        <label className="block font-semibold">{label}:</label>
+      )}
       {(() => {
         switch (label) {
+          case "placehold":
+            return <p></p>;
           case "text":
             return (
               <textarea

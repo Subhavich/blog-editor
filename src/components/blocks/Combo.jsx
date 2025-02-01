@@ -8,7 +8,6 @@ function Combo({ load, config }) {
         backgroundColor: bg,
         display: "flex",
         flexDirection: "column",
-
         alignItems:
           align === "center" ? "center" : align === "left" ? "start" : "end",
         color: bg === "black" ? "white" : "black",

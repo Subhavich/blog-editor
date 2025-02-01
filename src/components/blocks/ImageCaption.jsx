@@ -3,6 +3,7 @@ function ImageCaption({ load, config }) {
   const { align, bg } = config;
   return (
     <div
+      className="p-4"
       style={{
         backgroundColor: bg,
         display: "flex",

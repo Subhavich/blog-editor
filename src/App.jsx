@@ -21,18 +21,17 @@ function reducer(state, action) {
               ...editor,
               load:
                 action.key === "config"
-                  ? editor.load // Prevent modifying `load` when updating `config`
+                  ? { ...editor.load }
                   : { ...editor.load, [action.key]: action.value },
               config:
                 action.key === "config"
-                  ? { ...editor.config, ...action.value } // Properly update `config`
-                  : editor.config,
+                  ? { ...editor.config, ...action.value }
+                  : { ...editor.config },
               expanded:
-                action.key === "expanded" ? action.value : editor.expanded,
+                action.key === "expanded" ? action.value : editor.expanded, // ✅ Always update expanded separately
             }
           : editor
       );
-
     case "REORDER_EDITOR":
       const targetInd = action.index;
       const finalInd = action.index + action.increment;

@@ -6,6 +6,7 @@ import Spacer from "./Spacer";
 import List from "./List";
 
 function renderEle(type, load, config) {
+  console.log(type, load);
   switch (type) {
     case "heading":
       return <Heading load={load} config={config} />;
@@ -16,7 +17,7 @@ function renderEle(type, load, config) {
     case "paragraph":
       return <Paragraph load={load} config={config} />;
     case "spacer":
-      return <Spacer />;
+      return <Spacer load={load} config={config} />;
     case "list":
       return <List load={load} config={config} />;
     default:
@@ -39,13 +40,13 @@ export const options = [
     type: "imageCaption",
     load: {
       img: "https://media.cntraveler.com/photos/53d9d56c6dec627b149da069/master/pass/malabadi-bridge-batman-turkey.jpg",
-      text: "add image caption here",
+      text: "Batman, Turkey",
     },
     label: "Image with Caption",
   },
   {
     type: "spacer",
-
+    load: { placehold: "mockery" },
     label: "Spacer",
   },
   {
