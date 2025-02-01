@@ -1,6 +1,7 @@
 import { useReducer, useRef, useEffect } from "react";
 import { alignmentOptions, bgOptions } from "./Data";
 import renderEle, { options } from "./components/blocks/BlockOutlet";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 // Reducer function to manage the editors state
 function reducer(state, action) {
   switch (action.type) {
@@ -132,8 +133,8 @@ function EditorForm({ index, type, load, dispatch }) {
 
   return (
     <div className="p-2 border rounded shadow-sm">
-      <div className="flex start space-x-4 items-center">
-        <p className="text-lg font-bold">{type.toUpperCase()}</p>
+      <div className="flex justify-between space-x-4 items-center">
+        <p className="text-lg   font-bold">{type.toUpperCase()}</p>
         <div className="flex space-x-2">
           <span
             className="cursor-pointer text-lg font-bold"
@@ -145,7 +146,7 @@ function EditorForm({ index, type, load, dispatch }) {
               })
             }
           >
-            {"<"}
+            <AiFillCaretUp />
           </span>
           <span
             className="cursor-pointer text-lg font-bold"
@@ -157,7 +158,7 @@ function EditorForm({ index, type, load, dispatch }) {
               })
             }
           >
-            {">"}
+            <AiFillCaretDown />
           </span>
         </div>
       </div>
