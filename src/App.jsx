@@ -1,5 +1,5 @@
 import { useReducer, useRef, useState, useEffect } from "react";
-import { alignmentOptions, bgOptions } from "./Data";
+import { alignmentOptions, bgOptions, screenOptions } from "./Data";
 import { options } from "./components/blocks/BlockOutlet";
 import {
   AiFillCaretDown,
@@ -68,6 +68,7 @@ function reducer(state, action) {
 
 function App() {
   const [editors, dispatch] = useReducer(reducer, []);
+  const [screenWidth, setScreenWidth] = useState("max-w-[1024px]");
   const selectRef = useRef();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -89,7 +90,7 @@ function App() {
   }, [editors]);
 
   return (
-    <div className="flex font-mono">
+    <div className="   flex font-mono">
       {/* Sticky Sidebar */}
       <div
         className={`bg-neutral-200   fixed  left-0 top-0 h-screen  shadow-lg  transition-all overflow-y-auto duration-300 ${
@@ -152,10 +153,26 @@ function App() {
 
       {/* Main Content (Shifts when sidebar opens) */}
       <div
-        className={`flex-1 transition-all duration-300 ${
+        className={`flex-1 mx-auto ${screenWidth} transition-all duration-300 ${
           isSidebarOpen ? "ml-84" : "ml-12"
         } p-4`}
       >
+        <div className="w-full mx-auto flex space-x-8 ">
+          {screenOptions.map((opt) => (
+            <button
+              key={opt.label}
+              value={opt.value}
+              onClick={() => setScreenWidth(opt.value)}
+              className={`text-xs cursor-pointer px-1 py-0.5 ${
+                screenWidth === opt.value
+                  ? " scale-125 bg-neutral-950 text-white"
+                  : ""
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
         <Result editors={editors} />
       </div>
     </div>

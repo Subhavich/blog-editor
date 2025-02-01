@@ -35,7 +35,7 @@ function DynamicInput({ index, label, value, dispatch }) {
           type="text"
           value={value}
           onChange={handleChange}
-          className="bg-white border p-2 w-full"
+          className="bg-white  border p-2 w-full"
         />
       ) : label === "img" ? (
         <>
