@@ -1,7 +1,8 @@
 import { useReducer, useRef, useState, useEffect } from "react";
 import { alignmentOptions, bgOptions } from "./Data";
-import renderEle, { options } from "./components/blocks/BlockOutlet";
+import { options } from "./components/blocks/BlockOutlet";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import Result from "./components/Results";
 // Reducer function to manage the editors state
 function reducer(state, action) {
   switch (action.type) {
@@ -295,22 +296,6 @@ function DynamicInput({ index, label, value, dispatch }) {
           )}
         </>
       ) : null}
-    </div>
-  );
-}
-
-// Updated Result component to use editors state instead of mockBlog
-function Result({ editors }) {
-  return (
-    <div className="p-4 border-t mt-8">
-      <h2 className="text-xl font-bold mb-4">Rendered Elements:</h2>
-      {editors.length > 0 ? (
-        editors.map((ele, index) => (
-          <div key={index}>{renderEle(ele.type, ele.load, ele.config)}</div>
-        ))
-      ) : (
-        <p className="text-gray-500">No elements added yet.</p>
-      )}
     </div>
   );
 }
