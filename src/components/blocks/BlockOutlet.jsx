@@ -2,6 +2,7 @@ import ImageCaption from "./ImageCaption";
 import Heading from "./Heading";
 import Combo from "./Combo";
 import Paragraph from "./Paragraph";
+import Spacer from "./Spacer";
 
 function renderEle(type, load, config) {
   switch (type) {
@@ -13,6 +14,8 @@ function renderEle(type, load, config) {
       return <ImageCaption load={load} config={config} />;
     case "paragraph":
       return <Paragraph load={load} config={config} />;
+    case "spacer":
+      return <Spacer />;
     default:
       return null;
   }
@@ -36,6 +39,11 @@ export const options = [
       text: "add image caption here",
     },
     label: "Image with Caption",
+  },
+  {
+    type: "spacer",
+
+    label: "Spacer",
   },
   {
     type: "combo",

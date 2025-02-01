@@ -276,17 +276,18 @@ function EditorForm({ index, type, load, dispatch, expanded }) {
                 ))}
               </select>
             </div>
-            {Object.keys(load).map((key) =>
-              key !== "expanded" ? (
-                <DynamicInput
-                  key={key}
-                  index={index}
-                  label={key}
-                  value={load[key]}
-                  dispatch={dispatch}
-                />
-              ) : null
-            )}
+            {load &&
+              Object.keys(load).map((key) =>
+                key !== "expanded" ? (
+                  <DynamicInput
+                    key={key}
+                    index={index}
+                    label={key}
+                    value={load[key]}
+                    dispatch={dispatch}
+                  />
+                ) : null
+              )}
           </div>
         </>
       )}
