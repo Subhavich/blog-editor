@@ -2,6 +2,7 @@ import { useReducer, useRef, useState, useEffect } from "react";
 import { alignmentOptions, bgOptions } from "./Data";
 import { options } from "./components/blocks/BlockOutlet";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import DynamicInput from "./components/DynamicInput";
 import Result from "./components/Results";
 // Reducer function to manage the editors state
 function reducer(state, action) {
@@ -82,7 +83,7 @@ function App() {
       {/* Sticky Sidebar */}
       <div
         id="me"
-        className={`bg-neutral-200  fixed  left-0 top-0 h-screen  shadow-lg  transition-all overflow-y-auto duration-300 ${
+        className={`bg-neutral-200   fixed  left-0 top-0 h-screen  shadow-lg  transition-all overflow-y-auto duration-300 ${
           isSidebarOpen ? "w-84" : "w-12"
         }`}
       >
@@ -96,7 +97,7 @@ function App() {
 
         {/* Sidebar Content */}
         {isSidebarOpen && (
-          <div className="p-4">
+          <div className="pl-2 pr-8">
             <p className="text-center block py-2 text-lg">EDITORs</p>
 
             <main className="space-y-4 mb-4">
@@ -226,76 +227,6 @@ function EditorForm({ index, type, load, dispatch }) {
           dispatch={dispatch}
         />
       ))}
-    </div>
-  );
-}
-
-function DynamicInput({ index, label, value, dispatch }) {
-  const [preview, setPreview] = useState(null);
-  const imageRef = useRef();
-  const handleChange = (e) => {
-    dispatch({
-      type: "UPDATE_EDITOR",
-      index,
-      key: label,
-      value: e.target.value,
-    });
-  };
-
-  const handleChangeImg = (e) => {
-    const imageUrl = URL.createObjectURL(e.target.files[0]);
-    dispatch({
-      type: "UPDATE_EDITOR",
-      index,
-      key: label,
-      value: e.target.files ? URL.createObjectURL(e.target.files[0]) : "",
-    });
-    setPreview(imageUrl);
-  };
-
-  return (
-    <div className=" mb-2">
-      <label className="block font-semibold">{label}:</label>
-      {label === "text" ? (
-        <textarea
-          value={value}
-          onChange={handleChange}
-          className="border p-2 w-full resize-none"
-        />
-      ) : label === "head" ? (
-        <input
-          type="text"
-          value={value}
-          onChange={handleChange}
-          className="border p-2 w-full"
-        />
-      ) : label === "img" ? (
-        <>
-          <input
-            onChange={handleChangeImg}
-            type="file"
-            className="bg-white hidden"
-            ref={imageRef}
-            accept="image/*"
-          />
-          {preview ? (
-            <div
-              onClick={() => imageRef.current.click()}
-              className="size-24 relative cursor-pointer"
-            >
-              <img className=" size-24 object-cover absolute " src={preview} />
-              <div className="z-10 size-24 backdrop-brightness-75 absolute"></div>
-            </div>
-          ) : (
-            <div
-              onClick={() => imageRef.current.click()}
-              className="cursor-pointer flex justify-center items-center bg-white size-24"
-            >
-              <p>+</p>
-            </div>
-          )}
-        </>
-      ) : null}
     </div>
   );
 }
