@@ -3,6 +3,7 @@ import Heading from "./Heading";
 import Combo from "./Combo";
 import Paragraph from "./Paragraph";
 import Spacer from "./Spacer";
+import List from "./List";
 
 function renderEle(type, load, config) {
   switch (type) {
@@ -16,6 +17,8 @@ function renderEle(type, load, config) {
       return <Paragraph load={load} config={config} />;
     case "spacer":
       return <Spacer />;
+    case "list":
+      return <List load={load} config={config} />;
     default:
       return null;
   }
@@ -49,6 +52,11 @@ export const options = [
     type: "combo",
     load: { head: "add heading here", text: "add long text here" },
     label: "Combo",
+  },
+  {
+    type: "list",
+    load: { head: "", array: [] },
+    label: "List",
   },
 ];
 

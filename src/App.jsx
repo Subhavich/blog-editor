@@ -183,7 +183,6 @@ export default App;
 
 // Component that renders dynamic input fields based on load keys
 function EditorForm({ index, type, load, dispatch, expanded }) {
-  console.log("expanded is ", expanded, !expanded);
   const handleConfigChange = (e, arg) => {
     dispatch({
       type: "UPDATE_EDITOR",
@@ -204,7 +203,7 @@ function EditorForm({ index, type, load, dispatch, expanded }) {
           onClick={() => dispatch({ type: "DELETE_EDITOR", index })}
           className="text-rose-800 transition-all"
         >
-          <AiOutlineDelete size={24} />
+          <AiOutlineDelete className="cursor-pointer" size={24} />
         </button>
 
         {/* Expand/Collapse Title */}
@@ -254,6 +253,7 @@ function EditorForm({ index, type, load, dispatch, expanded }) {
         <>
           <hr className="mb-2" />
           <div className="flex flex-col space-y-2">
+            {/* Color/Align */}
             <div className="flex space-x-2 mt-2">
               <select
                 className="bg-white p-1"
