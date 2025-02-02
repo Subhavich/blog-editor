@@ -21,6 +21,11 @@ function reducer(state, action) {
             updatedEditor.config = { ...editor.config, ...action.value };
             break;
 
+          case "visible":
+            updatedEditor.visible = action.value;
+
+            break;
+
           default: // Handles all other updates (load updates)
             updatedEditor.load = { ...editor.load, [action.key]: action.value };
             break;

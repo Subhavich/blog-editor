@@ -2,10 +2,20 @@ import {
   AiFillCaretDown,
   AiFillCaretUp,
   AiOutlineDelete,
+  AiOutlineEye,
 } from "react-icons/ai";
 import { alignmentOptions, bgOptions } from "../../../Data";
 import DynamicInput from "./DynamicInput";
-function EditorForm({ index, type, load, dispatch, expanded, config }) {
+function EditorForm({
+  index,
+  type,
+  load,
+  dispatch,
+  expanded,
+  config,
+  visible,
+}) {
+  console.log(visible);
   const handleConfigChange = (e, arg) => {
     dispatch({
       type: "UPDATE_EDITOR",
@@ -27,6 +37,22 @@ function EditorForm({ index, type, load, dispatch, expanded, config }) {
           className="text-rose-800 transition-all"
         >
           <AiOutlineDelete className="cursor-pointer" size={24} />
+        </button>
+        <button
+          onClick={() =>
+            dispatch({
+              type: "UPDATE_EDITOR",
+              index,
+              key: "visible",
+              value: !visible,
+            })
+          }
+        >
+          <AiOutlineEye
+            className="cursor-pointer hover:text-green-400 transition-all"
+            size={24}
+            style={{ color: visible ? "green" : "red" }}
+          />
         </button>
 
         {/* Expand/Collapse Title */}

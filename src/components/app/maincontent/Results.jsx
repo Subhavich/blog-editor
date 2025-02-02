@@ -13,7 +13,10 @@ function Result({ editors, screenWidth, headerPicture, selectedMember }) {
         <WriterDetail selectedMember={selectedMember} />
         {editors.length > 0 ? (
           editors.map((ele, index) => (
-            <div className="overflow-clip" key={index}>
+            <div
+              className={`overflow-clip ${ele.visible ? "" : "hidden"}`}
+              key={index}
+            >
               {renderEle(ele.type, ele.load, ele.config)}
             </div>
           ))

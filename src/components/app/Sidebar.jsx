@@ -24,6 +24,7 @@ function Sidebar({
       load: JSON.parse(selectedOption.getAttribute("data-load")),
       config: { align: "left", bg: "white", width: 480 },
       expanded: true,
+      visible: true,
     };
 
     dispatch({ type: "ADD_EDITOR", payload: newEditor });
@@ -62,6 +63,7 @@ function Sidebar({
                 dispatch={dispatch}
                 config={editor.config}
                 expanded={editor.expanded}
+                visible={editor.visible}
               />
             ))}
           </main>
