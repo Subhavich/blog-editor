@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-function DynamicInput({ index, label, value, dispatch }) {
+function DynamicInput({ index, label, value, dispatch, config }) {
   const handleChange = (e) => {
     dispatch({
       type: "UPDATE_EDITOR",
@@ -30,6 +30,7 @@ function DynamicInput({ index, label, value, dispatch }) {
                 index={index}
                 label={label}
                 dispatch={dispatch}
+                width={config.width}
               />
             );
           case "array":
@@ -72,7 +73,7 @@ const HeadInput = ({ value, onChange }) => {
   );
 };
 
-const ImageInput = ({ value, index, label, dispatch }) => {
+const ImageInput = ({ value, index, label, dispatch, width }) => {
   const [preview, setPreview] = useState(value || null);
   const imageRef = useRef();
   const scaleRef = useRef();
@@ -104,6 +105,7 @@ const ImageInput = ({ value, index, label, dispatch }) => {
       <input
         onChange={handleWidthChange}
         type="range"
+        value={width}
         min={150}
         max={750}
         step={10}
