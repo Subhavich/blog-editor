@@ -23,7 +23,15 @@ function ImageCaption({ load, config }) {
           imageRendering: "auto", // ✅ Allows upscaling while compromising quality
         }}
       />
-      <p className="text-zinc-400 italic">{text}</p>
+      <p
+        className="text-zinc-400 italic "
+        style={{
+          textAlign:
+            align === "center" ? "center" : align === "left" ? "left" : "right",
+        }}
+      >
+        {text}
+      </p>
     </div>
   );
 }
