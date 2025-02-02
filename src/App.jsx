@@ -1,6 +1,6 @@
 import { useReducer, useRef, useState, useEffect } from "react";
 import { screenOptions } from "./Data";
-import { options } from "./components/blocks/BlockOutlet";
+import { options } from "./components/blocks/Outlet";
 import EditorForm from "./components/EditorForm";
 import Result from "./components/Results";
 // Reducer function to manage the editors state
@@ -106,7 +106,7 @@ function App() {
         {/* Sidebar Content */}
         {isSidebarOpen && (
           <div className="pl-2 pr-8">
-            <p className="text-center block py-2 text-lg">EDITORs</p>
+            <p className="text-center block py-2 text-lg">Blog Editor</p>
             {/* Editor Form Map */}
             <main className="space-y-4 mb-4">
               {editors.map((editor, index) => (
