@@ -8,7 +8,7 @@ function Result({ editors, screenWidth, headerPicture }) {
       <div
         className={`border-neutral-700  ${screenWidth}  rounded-lg border-8 `}
       >
-        <img src={headerPicture} className="h-64 w-dvw" />
+        <HeaderImage url={headerPicture} />
         {editors.length > 0 ? (
           editors.map((ele, index) => (
             <div className="overflow-clip" key={index}>
@@ -24,3 +24,9 @@ function Result({ editors, screenWidth, headerPicture }) {
 }
 
 export default Result;
+
+function HeaderImage({ url }) {
+  return (
+    <img src={url} className="object-center object-cover max-h-64 w-dvw" />
+  );
+}

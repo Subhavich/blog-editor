@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-
+import { AiOutlinePlusCircle } from "react-icons/ai";
 function DynamicInput({ index, label, value, dispatch, config }) {
   const handleChange = (e) => {
     dispatch({
@@ -128,7 +128,11 @@ const ImageInput = ({ value, index, label, dispatch, width }) => {
             src={preview}
             alt="Preview"
           />
-          <div className="z-10 size-24 backdrop-brightness-75 absolute"></div>
+          <div className="z-10 size-24 backdrop-brightness-75 absolute">
+            <p className="scale-150 cursor-pointer">
+              <AiOutlinePlusCircle />
+            </p>
+          </div>
         </div>
       ) : (
         <div

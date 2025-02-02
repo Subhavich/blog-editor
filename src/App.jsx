@@ -67,7 +67,9 @@ function App() {
   const [editors, dispatch] = useReducer(reducer, []);
   const [screenWidth, setScreenWidth] = useState("max-w-[1024px]");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [headerPicture, setHeaderPicture] = useState(null);
+  const [headerPicture, setHeaderPicture] = useState(
+    "https://picsum.photos/1024?grayscale&.webp"
+  );
   useEffect(() => {
     console.log(editors);
   }, [editors]);
