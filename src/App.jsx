@@ -155,11 +155,11 @@ function App() {
 
       {/* Main Content (Shifts when sidebar opens) */}
       <div
-        className={`flex-1 mx-auto ${screenWidth} transition-all duration-300 ${
+        className={`flex-1  min-h-screen mx-auto bg-gray-200   transition-all duration-300 ${
           isSidebarOpen ? "ml-84" : "ml-12"
         } p-4`}
       >
-        <div className="justify-center mx-auto flex space-x-8 ">
+        <div className=" justify-center mx-auto flex space-x-8 ">
           {screenOptions.map((opt) => (
             <button
               key={opt.label}
@@ -175,7 +175,7 @@ function App() {
             </button>
           ))}
         </div>
-        <Result editors={editors} />
+        <Result editors={editors} screenWidth={screenWidth} />
       </div>
     </div>
   );
