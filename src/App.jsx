@@ -71,6 +71,9 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const handleAddEditor = () => {
+    if (selectRef.current.value === "placeholder") {
+      return;
+    }
     const selectedOption = selectRef.current.selectedOptions[0];
     const newEditor = {
       type: selectedOption.getAttribute("data-type"),
@@ -97,7 +100,7 @@ function App() {
       >
         {/* Toggle Button */}
         <button
-          className="w-full text-white text-2xl bg-gray-700 p-2 text-center font-bold"
+          className="cursor-pointer w-full text-white text-2xl bg-gray-700 p-2 text-center font-bold"
           onClick={() => setIsSidebarOpen((prev) => !prev)}
         >
           {isSidebarOpen ? "<<" : ">>"}
@@ -122,11 +125,12 @@ function App() {
               ))}
             </main>
 
-            <div className="flex space-x-2 mt-4">
+            <div className="flex space-x-2 text-sm mt-4">
               <select
                 ref={selectRef}
-                className="bg-white border p-2 text-black"
+                className="bg-white border p-2  text-black"
               >
+                <option value={"placeholder"}>--select a component--</option>
                 {options.map((opt) => (
                   <option
                     key={opt.type}
