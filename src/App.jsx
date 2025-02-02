@@ -67,7 +67,7 @@ function App() {
   const [editors, dispatch] = useReducer(reducer, []);
   const [screenWidth, setScreenWidth] = useState("max-w-[1024px]");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
+  const [headerPicture, setHeaderPicture] = useState(null);
   useEffect(() => {
     console.log(editors);
   }, [editors]);
@@ -75,6 +75,8 @@ function App() {
   return (
     <div className="flex font-mono">
       <Sidebar
+        headerPicture={headerPicture}
+        setHeaderPicture={setHeaderPicture}
         editors={editors}
         dispatch={dispatch}
         isSidebarOpen={isSidebarOpen}
@@ -85,6 +87,7 @@ function App() {
         screenWidth={screenWidth}
         setScreenWidth={setScreenWidth}
         isSidebarOpen={isSidebarOpen}
+        headerPicture={headerPicture}
       />
     </div>
   );

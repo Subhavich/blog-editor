@@ -1,8 +1,16 @@
 import { useRef } from "react";
 import EditorForm from "./sidebar/EditorForm";
 import { options } from "../blocks/Outlet";
+import HeaderImageEditor from "./sidebar/HeaderEditor";
 
-function Sidebar({ editors, dispatch, isSidebarOpen, setIsSidebarOpen }) {
+function Sidebar({
+  editors,
+  dispatch,
+  isSidebarOpen,
+  setIsSidebarOpen,
+  headerPicture,
+  setHeaderPicture,
+}) {
   const selectRef = useRef();
 
   const handleAddEditor = () => {
@@ -36,6 +44,10 @@ function Sidebar({ editors, dispatch, isSidebarOpen, setIsSidebarOpen }) {
       {isSidebarOpen && (
         <div className="pl-2 pr-8">
           <p className="text-center block py-2 text-lg">Blog Editor</p>
+          <HeaderImageEditor
+            setHeaderPicture={setHeaderPicture}
+            headerPicture={headerPicture}
+          />
           <main className="space-y-4 mb-4">
             {editors.map((editor, index) => (
               <EditorForm

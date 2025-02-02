@@ -1,7 +1,13 @@
 import Result from "./maincontent/Results";
 import { screenOptions } from "../../Data";
 
-function MainContent({ editors, screenWidth, setScreenWidth, isSidebarOpen }) {
+function MainContent({
+  editors,
+  screenWidth,
+  setScreenWidth,
+  isSidebarOpen,
+  headerPicture,
+}) {
   return (
     <div
       className={`flex-1 min-h-screen mx-auto bg-gray-200 transition-all duration-300 ${
@@ -24,7 +30,11 @@ function MainContent({ editors, screenWidth, setScreenWidth, isSidebarOpen }) {
           </button>
         ))}
       </div>
-      <Result editors={editors} screenWidth={screenWidth} />
+      <Result
+        headerPicture={headerPicture}
+        editors={editors}
+        screenWidth={screenWidth}
+      />
     </div>
   );
 }

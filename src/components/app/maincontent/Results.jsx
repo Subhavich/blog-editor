@@ -1,14 +1,14 @@
 // Updated Result component to use editors state instead of mockBlog
 import renderEle from "../../blocks/Outlet";
 
-function Result({ editors, screenWidth }) {
+function Result({ editors, screenWidth, headerPicture }) {
   return (
     <div className="p-4 mt-8">
       <h2 className="text-xl font-bold  mb-4">Preview Screen</h2>
       <div
-        id="me"
         className={`border-neutral-700  ${screenWidth}  rounded-lg border-8 `}
       >
+        <img src={headerPicture} className="h-64 w-dvw" />
         {editors.length > 0 ? (
           editors.map((ele, index) => (
             <div className="overflow-clip" key={index}>
