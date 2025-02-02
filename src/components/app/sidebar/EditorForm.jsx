@@ -3,7 +3,7 @@ import {
   AiFillCaretUp,
   AiOutlineDelete,
 } from "react-icons/ai";
-import { alignmentOptions, bgOptions } from "../Data";
+import { alignmentOptions, bgOptions } from "../../../Data";
 import DynamicInput from "./DynamicInput";
 function EditorForm({ index, type, load, dispatch, expanded, config }) {
   const handleConfigChange = (e, arg) => {

@@ -1,5 +1,5 @@
 // Updated Result component to use editors state instead of mockBlog
-import renderEle from "./blocks/Outlet";
+import renderEle from "../../blocks/Outlet";
 
 function Result({ editors, screenWidth }) {
   return (
