@@ -50,6 +50,8 @@ function Sidebar({
             headerPicture={headerPicture}
           />
           <MemberSelector setSelectedMember={setSelectedMember} />
+          <hr className="mb-2 mt-4" />
+          <p className="text-center block py-2 text-lg">Add Blog Elements</p>
           <main className="space-y-4 mb-4">
             {editors.map((editor, index) => (
               <EditorForm
