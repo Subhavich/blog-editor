@@ -14,7 +14,7 @@ const HeaderImageEditor = ({ headerPicture, setHeaderPicture }) => {
 
   return (
     <>
-      <div className="flex items-center border p-2">
+      <div className="flex mb-2 items-center border p-2">
         <input
           type="file"
           ref={imageRef}
