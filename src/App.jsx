@@ -1,7 +1,6 @@
 import { useReducer, useRef, useState, useEffect } from "react";
 import Sidebar from "./components/app/Sidebar";
 import MainContent from "./components/app/MainContent";
-
 // Reducer function to manage the editors state
 function reducer(state, action) {
   switch (action.type) {
@@ -70,6 +69,8 @@ function App() {
   const [headerPicture, setHeaderPicture] = useState(
     "https://picsum.photos/1024?grayscale&.webp"
   );
+  const [selectedMember, setSelectedMember] = useState(null);
+
   useEffect(() => {
     console.log(editors);
   }, [editors]);
@@ -79,6 +80,7 @@ function App() {
       <Sidebar
         headerPicture={headerPicture}
         setHeaderPicture={setHeaderPicture}
+        setSelectedMember={setSelectedMember}
         editors={editors}
         dispatch={dispatch}
         isSidebarOpen={isSidebarOpen}
@@ -86,6 +88,7 @@ function App() {
       />
       <MainContent
         editors={editors}
+        selectedMember={selectedMember}
         screenWidth={screenWidth}
         setScreenWidth={setScreenWidth}
         isSidebarOpen={isSidebarOpen}

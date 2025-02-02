@@ -48,32 +48,38 @@ export const screenOptions = [
 export const mockMembers = [
   {
     name: "Eylül",
+    position: "Art Director",
     desc: "Spends weekends sketching in quiet cafés, always carrying a notebook full of ideas.",
-    image: "https://picsum.photos/300/300?random=1",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
   },
   {
     name: "Kerem",
+    position: "Creative Producer",
     desc: "Loves getting lost in old vinyl shops, collecting forgotten sounds from past decades.",
-    image: "https://picsum.photos/300/300?random=2",
+    image: "https://randomuser.me/api/portraits/men/2.jpg",
   },
   {
     name: "Zehra",
+    position: "Community Engagement Coordinator",
     desc: "Finds peace in weaving tapestries while listening to nostalgic Turkish folk songs.",
-    image: "https://picsum.photos/300/300?random=3",
+    image: "https://randomuser.me/api/portraits/women/3.jpg",
   },
   {
     name: "Emre",
+    position: "Editorial Associate",
     desc: "Spends hours in second-hand bookstores, searching for poetry collections with handwritten notes inside.",
-    image: "https://picsum.photos/300/300?random=4",
+    image: "https://randomuser.me/api/portraits/men/4.jpg",
   },
   {
     name: "Merve",
+    position: "Photography Lead",
     desc: "Has a habit of carrying a disposable film camera everywhere, capturing fleeting everyday moments.",
-    image: "https://picsum.photos/300/300?random=5",
+    image: "https://randomuser.me/api/portraits/women/5.jpg",
   },
   {
     name: "Can",
+    position: "Event & Partnerships Coordinator",
     desc: "Believes every great evening should end with spontaneous live music in a tiny, hidden bar.",
-    image: "https://picsum.photos/300/300?random=6",
+    image: "https://randomuser.me/api/portraits/men/6.jpg",
   },
 ];

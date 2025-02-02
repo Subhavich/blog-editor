@@ -2,7 +2,7 @@ import { useRef } from "react";
 import EditorForm from "./sidebar/EditorForm";
 import { options } from "../blocks/Outlet";
 import HeaderImageEditor from "./sidebar/HeaderEditor";
-
+import MemberSelector from "./sidebar/MemberSelector";
 function Sidebar({
   editors,
   dispatch,
@@ -10,6 +10,7 @@ function Sidebar({
   setIsSidebarOpen,
   headerPicture,
   setHeaderPicture,
+  setSelectedMember,
 }) {
   const selectRef = useRef();
 
@@ -48,6 +49,7 @@ function Sidebar({
             setHeaderPicture={setHeaderPicture}
             headerPicture={headerPicture}
           />
+          <MemberSelector setSelectedMember={setSelectedMember} />
           <main className="space-y-4 mb-4">
             {editors.map((editor, index) => (
               <EditorForm

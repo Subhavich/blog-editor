@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { AiOutlinePlus, AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 const HeaderImageEditor = ({ headerPicture, setHeaderPicture }) => {
   const [preview, setPreview] = useState(headerPicture ? headerPicture : null);
   const imageRef = useRef();

@@ -7,6 +7,7 @@ function MainContent({
   setScreenWidth,
   isSidebarOpen,
   headerPicture,
+  selectedMember,
 }) {
   return (
     <div
@@ -34,6 +35,7 @@ function MainContent({
         headerPicture={headerPicture}
         editors={editors}
         screenWidth={screenWidth}
+        selectedMember={selectedMember}
       />
     </div>
   );
