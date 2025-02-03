@@ -4,6 +4,7 @@ const ModeContext = createContext();
 
 export function ModeProvider({ children }) {
   const [mode, setMode] = useState("editing"); // Default mode
+  const [boxWidth, setBoxWidth] = useState(0);
 
   const toggleMode = () => {
     setMode((prevMode) =>
@@ -12,7 +13,17 @@ export function ModeProvider({ children }) {
   };
 
   return (
-    <ModeContext.Provider value={{ mode, toggleMode }}>
+    <ModeContext.Provider
+      value={{
+        mode,
+        toggleMode,
+        boxWidth,
+        setBoxWidth,
+        isMobile: boxWidth === 384,
+        isTablet: boxWidth === 760,
+        isPC: boxWidth === 1024,
+      }}
+    >
       {children}
     </ModeContext.Provider>
   );

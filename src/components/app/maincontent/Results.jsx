@@ -1,12 +1,32 @@
 // Updated Result component to use editors state instead of mockBlog
 import renderEle from "../../blocks/Outlet";
 import { mockMembers } from "../../../Data";
-
+import { useMeasure } from "@uidotdev/usehooks";
+import { useEffect } from "react";
+import { useMode } from "../../../context/mode-context";
+import { clsx } from "clsx";
 function Result({ editors, screenWidth, headerPicture, selectedMember }) {
+  const { setBoxWidth, isMobile, isTablet, isPC } = useMode();
+  const [ref, { width }] = useMeasure();
+  useEffect(() => {
+    if (!width) {
+      return;
+    }
+    setBoxWidth(width);
+  }, [width]);
   return (
-    <div className=" leading-relaxed sm:leading-loose p-4 mt-8 text-xs sm:text-base ">
+    <div
+      className={clsx(
+        "p-4 mt-8",
+        isMobile && "leading-loose text-xs",
+        isTablet && "leading-relaxed text-base",
+        isPC && "leading-relaxed text-base"
+      )}
+    >
       <h2 className="text-xl font-bold  mb-4">Preview Screen</h2>
+      <p className="bg-black size-24 text-white"></p>
       <div
+        ref={ref}
         className={`border-neutral-700 bg-white ${screenWidth} rounded-lg border-8 `}
       >
         <HeaderImage url={headerPicture} />
