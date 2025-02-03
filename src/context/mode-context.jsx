@@ -19,9 +19,9 @@ export function ModeProvider({ children }) {
         toggleMode,
         boxWidth,
         setBoxWidth,
-        isMobile: boxWidth === 384,
-        isTablet: boxWidth === 760,
-        isPC: boxWidth === 1024,
+        isMobile: boxWidth <= 384,
+        isTablet: boxWidth > 384 && boxWidth <= 760,
+        isPC: boxWidth > 760,
       }}
     >
       {children}

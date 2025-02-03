@@ -68,6 +68,7 @@ function WriterDetail({ selectedMember }) {
 }
 function MemberCard({ member }) {
   const { position, name, image, desc } = member;
+  const { isMobile, isPC, isTablet, boxWidth } = useMode();
   return (
     <div className="flex sm:flex-row items-center bg-white shadow-lg rounded-xl px-2 py-4 gap-4  xs:w-full max-w-sm sm:max-w-md mx-auto">
       {/* Rounded Image */}
@@ -79,13 +80,32 @@ function MemberCard({ member }) {
 
       {/* Member Info */}
       <div className="flex flex-col text-center sm:text-left">
-        <span className="block text-base xs:text-lg font-semibold text-gray-900">
+        <span
+          className={clsx(
+            " block font-semibold text-gray-900 ",
+            isMobile && "text-base",
+            isTablet && "text-2xl",
+            isPC && "text-2xl"
+          )}
+        >
           {name}
         </span>
-        <span className="block text-xs xs:text-sm text-gray-600">
+        <span
+          className={clsx(
+            " block  text-gray-600",
+            isMobile && "mt-1 text-xs",
+            isPC || (isTablet && "mt-2 text-sm")
+          )}
+        >
           {position}
         </span>
-        <p className="mt-1 hidden sm:visible  sm:mt-2 text-xs text-gray-500">
+        <p
+          className={clsx(
+            "   text-gray-500",
+            isMobile && "mt-1 text-xs",
+            isPC || (isTablet && "mt-2 text-sm")
+          )}
+        >
           {desc}
         </p>
       </div>
