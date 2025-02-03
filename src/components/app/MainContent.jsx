@@ -15,22 +15,10 @@ function MainContent({
         isSidebarOpen ? "ml-84" : "ml-12"
       } p-4`}
     >
-      <div className="justify-center mx-auto flex space-x-8">
-        {screenOptions.map((opt) => (
-          <button
-            key={opt.label}
-            value={opt.value}
-            onClick={() => setScreenWidth(opt.value)}
-            className={`text-xs cursor-pointer px-1 py-0.5 ${
-              screenWidth === opt.value
-                ? "scale-125 bg-neutral-950 text-white"
-                : ""
-            }`}
-          >
-            {opt.label}
-          </button>
-        ))}
-      </div>
+      <ScreenOptions
+        screenWidth={screenWidth}
+        setScreenWidth={setScreenWidth}
+      />
       <Result
         headerPicture={headerPicture}
         editors={editors}
@@ -42,3 +30,24 @@ function MainContent({
 }
 
 export default MainContent;
+
+function ScreenOptions({ setScreenWidth, screenWidth }) {
+  return (
+    <div className="justify-center mx-auto flex space-x-8">
+      {screenOptions.map((opt) => (
+        <button
+          key={opt.label}
+          value={opt.value}
+          onClick={() => setScreenWidth(opt.value)}
+          className={`text-xs cursor-pointer px-1 py-0.5 ${
+            screenWidth === opt.value
+              ? "scale-125 bg-neutral-950 text-white"
+              : ""
+          }`}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
+  );
+}
