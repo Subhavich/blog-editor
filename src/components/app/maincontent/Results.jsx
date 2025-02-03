@@ -4,7 +4,7 @@ import { mockMembers } from "../../../Data";
 
 function Result({ editors, screenWidth, headerPicture, selectedMember }) {
   return (
-    <div className="p-4 mt-8 text-xs sm:text-base ">
+    <div className=" leading-relaxed sm:leading-loose p-4 mt-8 text-xs sm:text-base ">
       <h2 className="text-xl font-bold  mb-4">Preview Screen</h2>
       <div
         className={`border-neutral-700 bg-white ${screenWidth} rounded-lg border-8 `}
@@ -66,7 +66,9 @@ function MemberCard({ member }) {
         <span className="block text-xs xs:text-sm text-gray-600">
           {position}
         </span>
-        <p className="mt-1 xs:mt-2 text-xs text-gray-500">{desc}</p>
+        <p className="mt-1 hidden sm:visible  sm:mt-2 text-xs text-gray-500">
+          {desc}
+        </p>
       </div>
     </div>
   );

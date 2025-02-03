@@ -8,7 +8,7 @@ function Paragraph({ load, config }) {
         textAlign: align,
         color: bg === "black" ? "white" : "black",
       }}
-      className="text-white text-base p-4"
+      className="text-white p-4"
     >
       {text}
     </p>
