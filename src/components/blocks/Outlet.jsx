@@ -5,7 +5,7 @@ import Paragraph from "./Paragraph";
 import Spacer from "./Spacer";
 import List from "./List";
 
-function renderEle(type, load, config, visible) {
+function renderEle(type, load, config) {
   switch (type) {
     case "heading":
       return <Heading load={load} config={config} />;

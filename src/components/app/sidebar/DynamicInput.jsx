@@ -11,7 +11,7 @@ function DynamicInput({ index, label, value, dispatch, config }) {
   };
 
   return (
-    <div className="mb-2">
+    <div className="mb-2 text-xs">
       {!label === "placehold" && (
         <label className="block font-semibold">{label}:</label>
       )}
@@ -54,12 +54,22 @@ function DynamicInput({ index, label, value, dispatch, config }) {
 export default DynamicInput;
 
 const TextInput = ({ value, onChange }) => {
+  const [expanded, setExpanded] = useState(false);
+  const handleToggleExpand = () => {
+    setExpanded((pv) => !pv);
+  };
   return (
-    <textarea
-      value={value}
-      onChange={onChange}
-      className="bg-white border p-2 w-full resize-none"
-    />
+    <div className="flex items-start flex-col space-y-1">
+      <p onClick={handleToggleExpand} className="p-0.5 border cursor-pointer">
+        Expand Input
+      </p>
+      <textarea
+        value={value}
+        rows={expanded ? 20 : 10}
+        onChange={onChange}
+        className="bg-white border p-2 w-full resize-none"
+      />
+    </div>
   );
 };
 
