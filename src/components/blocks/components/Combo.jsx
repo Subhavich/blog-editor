@@ -14,10 +14,13 @@ function Combo({ load, config }) {
       }}
       className="p-4 "
     >
-      <p style={{ textAlign: align }} className="text-2xl text-center">
+      <p
+        style={{ textAlign: align }}
+        className="text-xl xs:text-2xl text-center"
+      >
         {head}
       </p>
-      <p style={{ textAlign: align }} className="text-base text-center">
+      <p style={{ textAlign: align }} className=" text-center">
         {text}
       </p>
     </div>
