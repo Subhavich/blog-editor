@@ -4,7 +4,7 @@ import { mockMembers } from "../../../Data";
 
 function Result({ editors, screenWidth, headerPicture, selectedMember }) {
   return (
-    <div className="p-4 mt-8 text-xs xs:text-base ">
+    <div className="p-4 mt-8 text-xs sm:text-base ">
       <h2 className="text-xl font-bold  mb-4">Preview Screen</h2>
       <div
         className={`border-neutral-700 bg-white ${screenWidth} rounded-lg border-8 `}
