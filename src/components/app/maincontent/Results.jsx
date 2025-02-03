@@ -24,7 +24,6 @@ function Result({ editors, screenWidth, headerPicture, selectedMember }) {
       )}
     >
       <h2 className="text-xl font-bold  mb-4">Preview Screen</h2>
-      <p className="bg-black size-24 text-white"></p>
       <div
         ref={ref}
         className={`border-neutral-700 bg-white ${screenWidth} rounded-lg border-8 `}
