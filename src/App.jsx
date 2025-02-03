@@ -74,6 +74,9 @@ function App() {
   const [headerPicture, setHeaderPicture] = useState(
     "https://picsum.photos/1024?grayscale&.webp"
   );
+  const [title, setTitle] = useState(
+    "What to See in Batman, Turkey: A Travel Guide"
+  );
   const [selectedMember, setSelectedMember] = useState(null);
 
   useEffect(() => {
@@ -90,6 +93,8 @@ function App() {
         dispatch={dispatch}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
+        setTitle={setTitle}
+        title={title}
       />
       <MainContent
         editors={editors}
@@ -98,6 +103,7 @@ function App() {
         setScreenWidth={setScreenWidth}
         isSidebarOpen={isSidebarOpen}
         headerPicture={headerPicture}
+        title={title}
       />
     </div>
   );

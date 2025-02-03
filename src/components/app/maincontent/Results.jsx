@@ -5,7 +5,13 @@ import { useMeasure } from "@uidotdev/usehooks";
 import { useEffect } from "react";
 import { useMode } from "../../../context/mode-context";
 import { clsx } from "clsx";
-function Result({ editors, screenWidth, headerPicture, selectedMember }) {
+function Result({
+  title,
+  editors,
+  screenWidth,
+  headerPicture,
+  selectedMember,
+}) {
   const { setBoxWidth, isMobile, isTablet, isPC } = useMode();
   const [ref, { width }] = useMeasure();
   useEffect(() => {
@@ -29,6 +35,8 @@ function Result({ editors, screenWidth, headerPicture, selectedMember }) {
         className={`border-neutral-700 bg-white ${screenWidth} rounded-lg border-8 `}
       >
         <HeaderImage url={headerPicture} />
+        <Title text={title} />
+
         <WriterDetail selectedMember={selectedMember} />
         {editors.length > 0 ? (
           editors.map((ele, index) => (
@@ -110,5 +118,20 @@ function MemberCard({ member }) {
         </p>
       </div>
     </div>
+  );
+}
+
+function Title({ text }) {
+  const { isMobile } = useMode();
+  return (
+    <h1
+      className={clsx(
+        "text-center font-serif mt-2",
+        isMobile && "text-2xl px-2",
+        !isMobile && "  px-4 text-4xl leading-relaxed"
+      )}
+    >
+      {text}
+    </h1>
   );
 }

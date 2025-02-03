@@ -3,6 +3,7 @@ import EditorForm from "./sidebar/EditorForm";
 import { options } from "../blocks/Outlet";
 import HeaderImageEditor from "./sidebar/HeaderEditor";
 import MemberSelector from "./sidebar/MemberSelector";
+import TitleInput from "./sidebar/TitleInput";
 function Sidebar({
   editors,
   dispatch,
@@ -11,6 +12,8 @@ function Sidebar({
   headerPicture,
   setHeaderPicture,
   setSelectedMember,
+  title,
+  setTitle,
 }) {
   const selectRef = useRef();
 
@@ -46,6 +49,7 @@ function Sidebar({
       {isSidebarOpen && (
         <div className="pl-2 pr-8">
           <p className="text-center block py-2 text-lg">Blog Editor</p>
+          <TitleInput title={title} setTitle={setTitle} />
           <HeaderImageEditor
             setHeaderPicture={setHeaderPicture}
             headerPicture={headerPicture}

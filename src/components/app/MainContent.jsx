@@ -8,6 +8,7 @@ function MainContent({
   isSidebarOpen,
   headerPicture,
   selectedMember,
+  title,
 }) {
   return (
     <div
@@ -20,6 +21,7 @@ function MainContent({
         setScreenWidth={setScreenWidth}
       />
       <Result
+        title={title}
         headerPicture={headerPicture}
         editors={editors}
         screenWidth={screenWidth}
