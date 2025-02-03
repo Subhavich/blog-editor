@@ -6,8 +6,8 @@ const MemberSelector = ({ setSelectedMember }) => {
       className="bg-white p-2 border mb-2 w-full cursor-pointer"
     >
       <option value={null}>-- select team member --</option>
-      {mockMembers.map((opt) => (
-        <option key={opt.value} value={opt.value}>
+      {mockMembers.map((opt, ind) => (
+        <option key={ind} value={opt.value}>
           {opt.name}
         </option>
       ))}
