@@ -55,7 +55,7 @@ const ImageInput = ({ value, index, label, dispatch, width }) => {
             src={preview}
             alt="Preview"
           />
-          <div className="z-10 size-24 backdrop-brightness-75 absolute">
+          <div className="flex text-white items-center justify-center z-10 size-24 backdrop-brightness-75  absolute">
             <p className="scale-150 cursor-pointer">
               <AiOutlinePlusCircle />
             </p>
