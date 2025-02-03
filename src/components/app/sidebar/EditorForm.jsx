@@ -5,7 +5,7 @@ import {
   AiOutlineEye,
 } from "react-icons/ai";
 import { alignmentOptions, bgOptions } from "../../../Data";
-import DynamicInput from "./DynamicInput";
+import DynamicInput from "../../editors/Outlet";
 function EditorForm({
   index,
   type,

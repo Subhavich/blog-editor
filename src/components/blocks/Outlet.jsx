@@ -1,9 +1,9 @@
-import ImageCaption from "./ImageCaption";
-import Heading from "./Heading";
-import Combo from "./Combo";
-import Paragraph from "./Paragraph";
-import Spacer from "./Spacer";
-import List from "./List";
+import ImageCaption from "./components/ImageCaption";
+import Heading from "./components/Heading";
+import Combo from "./components/Combo";
+import Paragraph from "./components/Paragraph";
+import Spacer from "./components/Spacer";
+import List from "./components/List";
 
 function renderEle(type, load, config) {
   switch (type) {
