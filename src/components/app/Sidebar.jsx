@@ -38,6 +38,7 @@ function Sidebar({
 
   return (
     <div
+      onBlur={() => setIsSidebarOpen(false)}
       className={clsx(
         "bg-neutral-200 fixed left-0 w-0 top-0 h-screen shadow-lg transition-all overflow-y-auto duration-300",
         isSidebarOpen ? "w-84 sm:w-84" : "sm:w-12"

@@ -70,7 +70,7 @@ function reducer(state, action) {
 function App() {
   const [editors, dispatch] = useReducer(reducer, []);
   const [screenWidth, setScreenWidth] = useState("max-w-96");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 600);
   const [headerPicture, setHeaderPicture] = useState(
     "https://picsum.photos/1024?grayscale&.webp"
   );
