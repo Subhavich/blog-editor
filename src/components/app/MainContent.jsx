@@ -1,5 +1,6 @@
 import Result from "./maincontent/Results";
 import { screenOptions } from "../../Data";
+import { useMode } from "../../context/mode-context";
 
 function MainContent({
   editors,
@@ -13,7 +14,7 @@ function MainContent({
   return (
     <div
       className={`flex-1 min-h-screen mx-auto bg-gray-200 transition-all duration-300 ${
-        isSidebarOpen ? "ml-84" : "ml-12"
+        isSidebarOpen ? "sm:ml-84" : "sm:ml-12"
       } p-4`}
     >
       <ScreenOptions
@@ -35,7 +36,7 @@ export default MainContent;
 
 function ScreenOptions({ setScreenWidth, screenWidth }) {
   return (
-    <div className="justify-center mx-auto flex space-x-8">
+    <div className="hidden justify-center mx-auto sm:flex space-x-8">
       {screenOptions.map((opt) => (
         <button
           key={opt.label}

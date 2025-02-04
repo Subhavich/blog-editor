@@ -4,6 +4,9 @@ import { options } from "../blocks/Outlet";
 import HeaderImageEditor from "./sidebar/HeaderEditor";
 import MemberSelector from "./sidebar/MemberSelector";
 import TitleInput from "./sidebar/TitleInput";
+import { useMode } from "../../context/mode-context";
+import { clsx } from "clsx";
+
 function Sidebar({
   editors,
   dispatch,
@@ -35,17 +38,15 @@ function Sidebar({
 
   return (
     <div
-      className={`bg-neutral-200 fixed left-0 top-0 h-screen shadow-lg transition-all overflow-y-auto duration-300 ${
-        isSidebarOpen ? "w-84" : "w-12"
-      }`}
+      className={clsx(
+        "bg-neutral-200 fixed left-0 w-0 top-0 h-screen shadow-lg transition-all overflow-y-auto duration-300",
+        isSidebarOpen ? "w-84 sm:w-84" : "sm:w-12"
+      )}
     >
-      <button
-        className="cursor-pointer w-full text-white text-2xl bg-gray-700 p-2 text-center font-bold"
-        onClick={() => setIsSidebarOpen((prev) => !prev)}
-      >
-        {isSidebarOpen ? "<<" : ">>"}
-      </button>
-
+      <SidebarOpener
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
       {isSidebarOpen && (
         <div className="pl-2 pr-8">
           <p className="text-center block py-2 text-lg">Blog Editor</p>
@@ -99,3 +100,14 @@ function Sidebar({
 }
 
 export default Sidebar;
+
+function SidebarOpener({ isSidebarOpen, setIsSidebarOpen }) {
+  return (
+    <button
+      className="cursor-pointer w-full text-white text-2xl bg-gray-700 p-2 text-center font-bold"
+      onClick={() => setIsSidebarOpen((prev) => !prev)}
+    >
+      {isSidebarOpen ? "<<" : ">>"}
+    </button>
+  );
+}

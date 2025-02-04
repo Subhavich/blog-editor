@@ -69,7 +69,7 @@ function reducer(state, action) {
 
 function App() {
   const [editors, dispatch] = useReducer(reducer, []);
-  const [screenWidth, setScreenWidth] = useState("max-w-[1024px]");
+  const [screenWidth, setScreenWidth] = useState("max-w-96");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [headerPicture, setHeaderPicture] = useState(
     "https://picsum.photos/1024?grayscale&.webp"
@@ -84,7 +84,12 @@ function App() {
   }, [editors]);
 
   return (
-    <div className="flex font-mono">
+    <div className="flex sm:flex-row relative flex-col  font-mono">
+      <FloatingOpener
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
+
       <Sidebar
         headerPicture={headerPicture}
         setHeaderPicture={setHeaderPicture}
@@ -110,3 +115,16 @@ function App() {
 }
 
 export default App;
+
+function FloatingOpener({ isSidebarOpen, setIsSidebarOpen }) {
+  return (
+    <div
+      className={`${
+        isSidebarOpen && "hidden"
+      } flex justify-center text-white font-bold bg-gray-700 w-24 sm:hidden absolute top-2 text-lg right-2 pb-2 pt-1 `}
+      onClick={() => setIsSidebarOpen((pv) => !pv)}
+    >
+      <p className="p-2">Edit</p>
+    </div>
+  );
+}
