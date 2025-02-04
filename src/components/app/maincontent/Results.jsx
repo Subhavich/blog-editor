@@ -78,12 +78,22 @@ function MemberCard({ member }) {
   const { position, name, image, desc } = member;
   const { isMobile, isPC, isTablet, boxWidth } = useMode();
   return (
-    <div className="flex sm:flex-row items-center bg-white shadow-lg rounded-xl px-2 py-4 gap-4  xs:w-full max-w-sm sm:max-w-md mx-auto">
+    <div
+      className={clsx(
+        " gap-4  py-2 mx-auto flex items-center bg-white border rounded-xl border-neutral-300",
+        isMobile && "w-full max-w-sm p-2",
+        !isMobile && "max-w-md leading-snug p-4"
+      )}
+    >
       {/* Rounded Image */}
       <img
         src={image}
         alt={name}
-        className=" w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-full border border-gray-300"
+        className={clsx(
+          "object-cover rounded-full m-2",
+          isMobile && "size-14",
+          !isMobile && " size-16"
+        )}
       />
 
       {/* Member Info */}
@@ -102,7 +112,7 @@ function MemberCard({ member }) {
           className={clsx(
             " block  text-gray-600",
             isMobile && "mt-1 text-xs",
-            isPC || (isTablet && "mt-2 text-sm")
+            !isMobile && "mt-2 text-sm"
           )}
         >
           {position}
@@ -111,7 +121,7 @@ function MemberCard({ member }) {
           className={clsx(
             "   text-gray-500",
             isMobile && "mt-1 text-xs",
-            isPC || (isTablet && "mt-2 text-sm")
+            !isMobile && "mt-2 text-sm"
           )}
         >
           {desc}
