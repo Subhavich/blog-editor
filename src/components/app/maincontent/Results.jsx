@@ -68,6 +68,21 @@ function HeaderImage({ url }) {
   );
 }
 
+function Title({ text }) {
+  const { isMobile } = useMode();
+  return (
+    <h1
+      className={clsx(
+        "text-center font-serif mt-2",
+        isMobile && "text-2xl px-2",
+        !isMobile && "  px-4 text-4xl leading-relaxed"
+      )}
+    >
+      {text}
+    </h1>
+  );
+}
+
 function WriterDetail({ selectedMember }) {
   const targetedMember = mockMembers.find(
     (member) => member.name === selectedMember
@@ -133,20 +148,5 @@ function MemberCard({ member }) {
         </p>
       </div>
     </div>
-  );
-}
-
-function Title({ text }) {
-  const { isMobile } = useMode();
-  return (
-    <h1
-      className={clsx(
-        "text-center font-serif mt-2",
-        isMobile && "text-2xl px-2",
-        !isMobile && "  px-4 text-4xl leading-relaxed"
-      )}
-    >
-      {text}
-    </h1>
   );
 }
