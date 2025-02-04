@@ -100,6 +100,7 @@ function App() {
         setIsSidebarOpen={setIsSidebarOpen}
         setTitle={setTitle}
         title={title}
+        screenWidth={screenWidth}
       />
       <MainContent
         editors={editors}

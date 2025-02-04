@@ -1,10 +1,9 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import EditorForm from "./sidebar/EditorForm";
 import { options } from "../blocks/Outlet";
 import HeaderImageEditor from "./sidebar/HeaderEditor";
 import MemberSelector from "./sidebar/MemberSelector";
 import TitleInput from "./sidebar/TitleInput";
-import { useMode } from "../../context/mode-context";
 import { clsx } from "clsx";
 
 function Sidebar({
@@ -19,6 +18,29 @@ function Sidebar({
   setTitle,
 }) {
   const selectRef = useRef();
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    const isPC = window.innerWidth > 600;
+
+    function handleClickOutside(event) {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsSidebarOpen(false); // Close sidebar when clicking outside
+      }
+    }
+
+    if (isSidebarOpen) {
+      if (!isPC) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+    }
+
+    return () => {
+      if (!isPC) {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+    };
+  }, [isSidebarOpen]);
 
   const handleAddEditor = () => {
     if (selectRef.current.value === "placeholder") {
@@ -38,7 +60,8 @@ function Sidebar({
 
   return (
     <div
-      onBlur={() => setIsSidebarOpen(false)}
+      ref={sidebarRef}
+      // onBlur={() => setIsSidebarOpen(false)}
       className={clsx(
         "bg-neutral-200 fixed left-0 w-0 top-0 h-screen shadow-lg transition-all overflow-y-auto duration-300",
         isSidebarOpen ? "w-84 sm:w-84" : "sm:w-12"
