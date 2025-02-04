@@ -14,12 +14,14 @@ function Result({
 }) {
   const { setBoxWidth, isMobile, isTablet, isPC } = useMode();
   const [ref, { width }] = useMeasure();
+
   useEffect(() => {
     if (!width) {
       return;
     }
     setBoxWidth(width);
   }, [width]);
+
   return (
     <div
       className={clsx(
@@ -50,6 +52,9 @@ function Result({
         ) : (
           <p className="text-gray-500 p-8 text-lg">No elements added yet.</p>
         )}
+        <footer className=" text-lg text-white bg-slate-600">
+          <p className="  text-center py-8">Footer</p>
+        </footer>
       </div>
     </div>
   );
