@@ -81,6 +81,14 @@ function App() {
 
   useEffect(() => {
     console.log(editors);
+    console.log({
+      metadata: {
+        title,
+        headerPicture,
+        selectedMember,
+      },
+      content: editors,
+    });
   }, [editors]);
 
   return (
