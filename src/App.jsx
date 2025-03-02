@@ -1,7 +1,7 @@
 import { useReducer, useRef, useState, useEffect } from "react";
 import Sidebar from "./components/app/Sidebar";
 import MainContent from "./components/app/MainContent";
-// Reducer function to manage the editors state
+
 function reducer(state, action) {
   switch (action.type) {
     case "ADD_EDITOR":
@@ -23,10 +23,9 @@ function reducer(state, action) {
 
           case "visible":
             updatedEditor.visible = action.value;
-
             break;
 
-          default: // Handles all other updates (load updates)
+          default:
             updatedEditor.load = { ...editor.load, [action.key]: action.value };
             break;
         }
@@ -67,6 +66,43 @@ function reducer(state, action) {
   }
 }
 
+async function createFormData(metadata, content) {
+  const formData = new FormData();
+
+  // Convert metadata to string (headerPicture is stored separately)
+  formData.append(
+    "metadata",
+    JSON.stringify({
+      title: metadata.title,
+      selectedMember: metadata.selectedMember,
+      headerPicture:
+        metadata.headerPicture instanceof File
+          ? "headerImage"
+          : metadata.headerPicture,
+    })
+  );
+
+  // Prepare content: Replace image files with `imageId`
+  const processedContent = content.map((block, index) => {
+    if (block.type === "imageCaption" && block.load.img instanceof File) {
+      const fileKey = `image-${index}`;
+      formData.append(fileKey, block.load.img); // Attach file separately
+      return { ...block, load: { ...block.load, img: fileKey } }; // Replace img with imageId
+    }
+    return block;
+  });
+
+  // Append processed content
+  formData.append("content", JSON.stringify(processedContent));
+
+  // Append header image if it's a file
+  if (metadata.headerPicture instanceof File) {
+    formData.append("headerImage", metadata.headerPicture);
+  }
+
+  return formData;
+}
+
 function App() {
   const [editors, dispatch] = useReducer(reducer, []);
   const [screenWidth, setScreenWidth] = useState("max-w-96");
@@ -78,6 +114,7 @@ function App() {
     "What to See in Batman, Turkey: A Travel Guide"
   );
   const [selectedMember, setSelectedMember] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     console.log(editors);
@@ -89,10 +126,34 @@ function App() {
       },
       content: editors,
     });
-  }, [editors]);
+  }, [editors, headerPicture, title]);
+
+  const handleSaveBlog = async () => {
+    setIsSubmitting(true);
+    try {
+      const formData = await createFormData(
+        { title, headerPicture, selectedMember },
+        editors
+      );
+
+      const response = await fetch("http://localhost:5000/blog", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      console.log("📥 Received Response:", result);
+      alert("Blog saved successfully!");
+    } catch (error) {
+      console.error("❌ Error saving blog:", error);
+      alert("Failed to save blog.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <div className="flex sm:flex-row relative flex-col  font-mono">
+    <div className="flex sm:flex-row relative flex-col font-mono">
       <FloatingOpener
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
@@ -119,6 +180,15 @@ function App() {
         headerPicture={headerPicture}
         title={title}
       />
+
+      {/* Save Blog Button */}
+      <button
+        onClick={handleSaveBlog}
+        disabled={isSubmitting}
+        className="fixed bottom-4 right-4 px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 disabled:opacity-50"
+      >
+        {isSubmitting ? "Saving..." : "Save Blog"}
+      </button>
     </div>
   );
 }

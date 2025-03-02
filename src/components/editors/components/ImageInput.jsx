@@ -1,24 +1,45 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+
 const ImageInput = ({ value, index, label, dispatch, width }) => {
-  const [preview, setPreview] = useState(value || null);
+  const [file, setFile] = useState(value || null);
+  const [preview, setPreview] = useState(null);
   const imageRef = useRef();
   const scaleRef = useRef();
 
+  useEffect(() => {
+    // If value is a File, generate preview
+    if (value instanceof File) {
+      const objectUrl = URL.createObjectURL(value);
+      setPreview(objectUrl);
+
+      // Cleanup to avoid memory leaks
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [value]);
+
   const handleChangeImg = (e) => {
     if (e.target.files && e.target.files[0]) {
-      const imageUrl = URL.createObjectURL(e.target.files[0]);
-      setPreview(imageUrl);
+      const newFile = e.target.files[0];
+      setFile(newFile);
+
+      // Create preview URL
+      const objectUrl = URL.createObjectURL(newFile);
+      setPreview(objectUrl);
+
       dispatch({
         type: "UPDATE_EDITOR",
         index,
         key: label,
-        value: imageUrl,
+        value: newFile, // Store actual File object
       });
+
+      // Cleanup previous object URL
+      return () => URL.revokeObjectURL(objectUrl);
     }
   };
 
-  const handleWidthChange = (e) => {
+  const handleWidthChange = () => {
     dispatch({
       type: "UPDATE_EDITOR",
       index,
@@ -55,7 +76,7 @@ const ImageInput = ({ value, index, label, dispatch, width }) => {
             src={preview}
             alt="Preview"
           />
-          <div className="flex text-white items-center justify-center z-10 size-24 backdrop-brightness-75  absolute">
+          <div className="flex text-white items-center justify-center z-10 size-24 backdrop-brightness-75 absolute">
             <p className="scale-150 cursor-pointer">
               <AiOutlinePlusCircle />
             </p>

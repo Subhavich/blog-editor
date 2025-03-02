@@ -1,6 +1,24 @@
+import { useState, useEffect } from "react";
 function ImageCaption({ load, config }) {
   const { img, text } = load;
   const { align, bg, width } = config;
+  const [imageSrc, setImageSrc] = useState(null);
+  useEffect(() => {
+    if (img instanceof File) {
+      // Convert file to URL
+      const objectUrl = URL.createObjectURL(img);
+      setImageSrc(objectUrl);
+
+      // Cleanup when component unmounts
+      return () => URL.revokeObjectURL(objectUrl);
+    } else if (typeof img === "string") {
+      // If it's already a URL (e.g., preloaded image)
+      setImageSrc(img);
+    } else {
+      setImageSrc(null);
+    }
+  }, [img]);
+
   return (
     <div
       className="p-4"
@@ -15,7 +33,7 @@ function ImageCaption({ load, config }) {
     >
       <img
         className=""
-        src={img}
+        src={imageSrc}
         style={{
           width: width ? (isNaN(width) ? width : `${width}px`) : "auto",
           height: "auto",

@@ -2,7 +2,7 @@
 import renderEle from "../../blocks/Outlet";
 import { mockMembers } from "../../../Data";
 import { useMeasure } from "@uidotdev/usehooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMode } from "../../../context/mode-context";
 import { clsx } from "clsx";
 function Result({
@@ -64,7 +64,10 @@ export default Result;
 
 function HeaderImage({ url }) {
   return (
-    <img src={url} className="object-center object-cover max-h-64 w-dvw" />
+    <img
+      src={url instanceof File ? URL.createObjectURL(url) : url}
+      className="object-center object-cover max-h-64 w-dvw"
+    />
   );
 }
 
