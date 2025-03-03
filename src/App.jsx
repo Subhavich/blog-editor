@@ -1,6 +1,7 @@
 import { useReducer, useRef, useState, useEffect } from "react";
 import Sidebar from "./components/app/Sidebar";
 import MainContent from "./components/app/MainContent";
+import { use } from "react";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -115,6 +116,8 @@ function App() {
   );
   const [selectedMember, setSelectedMember] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [unpro, setUnpro] = useState(undefined);
+  const [pro, setPro] = useState(undefined);
 
   useEffect(() => {
     console.log(editors);
@@ -127,6 +130,26 @@ function App() {
       content: editors,
     });
   }, [editors, headerPicture, title]);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const response = await fetch("http://localhost:5000/blog/");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log(result);
+        const bro = mapDatabaseImages(result[1]);
+        console.log(result[1], " vs ", bro);
+
+        return null;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    loadData();
+  }, []); // Dependency array ensures it runs only once on mount
 
   const handleSaveBlog = async () => {
     setIsSubmitting(true);
@@ -206,4 +229,38 @@ function FloatingOpener({ isSidebarOpen, setIsSidebarOpen }) {
       <p className="p-2">Edit</p>
     </div>
   );
+}
+
+function mapDatabaseImages(blog) {
+  if (!blog.databaseImages) return blog; // If no images to map, return as is.
+
+  const { databaseImages } = blog;
+
+  // Map header image
+  const updatedMetadata = {
+    ...blog.metadata,
+    headerPicture:
+      databaseImages[blog.metadata.headerPicture] ||
+      blog.metadata.headerPicture,
+  };
+
+  // Map content images
+  const updatedContent = blog.content.map((block) => {
+    if (block.type === "imageCaption" && databaseImages[block.load.img]) {
+      return {
+        ...block,
+        load: {
+          ...block.load,
+          img: databaseImages[block.load.img], // Replace with actual image URL
+        },
+      };
+    }
+    return block;
+  });
+
+  return {
+    ...blog,
+    metadata: updatedMetadata,
+    content: updatedContent,
+  };
 }
